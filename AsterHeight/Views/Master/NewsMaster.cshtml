@@ -1,0 +1,123 @@
+﻿@model AsterHeight.Models.Master
+
+@{
+    ViewBag.Title = "NewsMaster";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("NewsMaster", "Master", FormMethod.Post, new { @id = "form1" }))
+{
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Master</li>
+            <li class="breadcrumb-item">News Master</li>
+        </ul>
+    </section>
+
+    @*<div class="card-header">
+            <h4>News Master</h4>
+        </div>*@
+
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>News Master</h4>
+
+                    <p style="color: red">
+                        @TempData["News"]
+                    </p>
+                </div>
+
+                <div class="card-body">
+
+
+
+                    <div class="row ">
+                        <div class="input-field col m6 s12">
+                            News For <span style="color: red">*</span>
+                            @Html.DropDownListFor(m => m.NewsFor, new SelectList(ViewBag.NewsFor, "Value", "Text"), new { @class = "form-control" })
+                        </div>
+
+                        <div class="input-field col m6 s12">
+
+                            Heading<span style="color:red">*</span>
+                            @Html.TextBoxFor(m => m.NewsHeading, new { @class = "form-control", @Placeholder = "News Heading" })
+
+                        </div>
+                        <div class="input-field col m12 s12">
+                            Body<span style="color:red">*</span>
+                            @Html.TextAreaFor(m => m.NewsBody, new { @class = "form-control", @Placeholder = "News Body" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="input-field col s12">
+                            @if (Model.NewsID == null)
+                {
+                                <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(m => m.NewsID, new { @Value = @Model.NewsID })
+                                <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Update" id="btnUpdate" name="btnUpdate" />
+                            }
+                            <a class="btn btn-info" href="/Master/NewsList">Back To List</a>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+                <script>
+
+                    function validate() {
+                        $(".errortext").removeClass("errortext");
+                        if ($('#NewsFor').val() == 0) {
+                            $("#NewsFor").addClass('errortext');
+                            $('#NewsFor').focus();
+                            return false;
+                        }
+                        if ($('#NewsHeading').val() == '') {
+                            $("#NewsHeading").addClass('errortext');
+                            $('#NewsHeading').focus();
+                            return false;
+                        }
+                        if ($('#NewsBody').val() == '') {
+                            $("#NewsBody").addClass('errortext');
+                            $('#NewsBody').focus();
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                    function Check() {
+                        debugger
+                        if ($('#ConfirmNewPassword').val() != $('#NewPassword').val()) {
+
+                            alert("Confirm Password and new password should be same .")
+                            $('#ConfirmNewPassword').val('')
+                        }
+                    }
+                </script>
+
+
+
+
+

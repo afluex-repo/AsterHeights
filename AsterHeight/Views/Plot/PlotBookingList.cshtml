@@ -1,0 +1,328 @@
+﻿@model AsterHeight.Models.Plot
+
+@{
+    ViewBag.Title = "PlotBookingList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../files/assets/images/login-gif-11.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>
+<div class="loader" id="divload"></div>
+@using (Html.BeginForm("PlotBookingList", "Plot", FormMethod.Post, new { @id = "form1" }))
+{    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Plot</li>
+            <li class="breadcrumb-item">Booking List</li>
+        </ul>
+    </section>
+    <div class="section-body">
+        <div class="card">
+            <div class="card-header">
+                <h4>Booking List</h4>
+                <p style="color: red">
+                    @TempData["Update"]
+
+                </p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- HTML5 Export Buttons table start -->
+
+                        <div class="card-header table-card-header">
+                            <a class="btn btn-primary btn-sm" style="margin-left:92%;" href="/Employee/EmployeeRegistration">Add New</a>
+                        </div>
+                        <div class="card-block" style="margin-left:5px;margin-right:5px">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Customer ID
+                                        @Html.TextBoxFor(m => m.CustomerID, new { @class = "form-control", @Placeholder = "Search by Customer ID" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Associate ID
+                                        @Html.TextBoxFor(m => m.AssociateID, new { @class = "form-control", @Placeholder = "Search by Associate ID" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        From Date
+                                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @Placeholder = "From Date", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        To Date
+                                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @Placeholder = "To Date", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Booking No
+                                        @Html.TextBoxFor(m => m.BookingNumber, new { @class = "form-control", @Placeholder = "Booking No" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Select Site
+                                        @Html.DropDownListFor(m => m.SiteID, new SelectList(ViewBag.ddlSite, "Value", "Text"), new { @class = "form-control", @onchange = "return onSiteChange();" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Select Phase
+                                        @Html.DropDownListFor(m => m.SectorID, new SelectList(ViewBag.ddlSector, "Value", "Text"), new { @class = "form-control", @onchange = "return onSectorChange();" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Select Block
+                                        @Html.DropDownListFor(m => m.BlockID, new SelectList(ViewBag.ddlBlock, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Plot Number
+                                        @Html.TextBoxFor(m => m.PlotNumber, new { @class = "form-control", @Placeholder = "PlotNumber" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Select Plan
+                                        @Html.DropDownListFor(m => m.PaymentPlanID, new SelectList(ViewBag.ddlBookingType, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Payment Mode
+                                        @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlPaymentMode, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <br />
+                                        <input class="btn btn-success" type="submit" value="Search" id="btnSearch" name="Search" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-md" id="tableExport" data-page-length='50' style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>S No.</th>
+                                            @*<th>Branch</th>*@
+                                            <th>Booking No</th>
+                                            <th>Booking Date</th>
+                                            <th>Site</th>
+                                            <th>Sector</th>
+                                            <th>Block</th>
+                                            <th>Plot Number.</th>
+                                            <th>Plot Area</th>
+                                            <th>Booking Status</th>
+                                            <th>Plot Rate</th>
+                                            <th>Customer Detail</th>
+                                            <th>Associate Details</th>
+                                            <th>Mobile No.</th>
+                                            <th>Plot Amt</th>
+                                            <th>Discount</th>
+                                            <th>Net Amt</th>
+                                            <th>Payment Mode</th>
+                                            <th>Paid Amt</th>
+                                            <th>View</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.lstPlot != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.lstPlot)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>@Item.BookingNumber</td>
+                                                        <td>@Item.BookingDate</td>
+                                                        <th>@Item.SiteName</th>
+                                                        <th>@Item.SectorName</th>
+                                                        <th>@Item.BlockName</th>
+                                                        <td>@Item.PlotNumber</td>
+                                                        <td> @Item.PlotArea</td>
+                                                        <td class="label label-info">@Item.BookingStatus</td>
+                                                        <td class="label label-warning">@Item.PlotRate</td>
+                                                        <td>@Item.CustomerName (@Item.CustomerLoginID)</td>
+                                                        <td>@Item.AssociateName (@Item.AssociateLoginID)</td>
+                                                        <td>@Item.Mobile</td>
+                                                        <td>@Item.PlotAmount</td>
+                                                        <td>@Item.Discount</td>
+                                                        <td>@Item.NetPlotAmount</td>
+                                                        <td>@Item.PaymentMode</td>
+                                                        <td>@Item.PaidAmount</td>
+                                                        <td>
+                                                            <div class="badge badge-success badge-shadow"><a class="badge badge-success badge-shadow" target="_blank" href="/AdminReports/LedgerReport?BookingNumber=@Item.BookingNumber"><span>View Ledger</span></a></div>
+                                                        </td>
+                                                        <td>
+                                                    <a class="btn tblEditBtn" data-toggle="tooltip" target="_blank" href="/Plot/Edit?id=@Item.EncryptKey" title="" data-original-title="Edit">
+                                                                <i class="material-icons">mode_edit</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        }
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+
+<script>
+
+
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+
+
+    function EditPlot() {
+        $.ajax({
+            url: "/Plot/UpdatePlotBooking",
+            Type: "Get",
+            DataType: "JSON",
+            data: { PK_BookingId: $("#PK_BookingId").val() },
+            success: function (data) {
+                //   alert(data.Result);
+                window.location.href = '@Url.Action("PlotBooking", "Plot")';
+
+            }
+
+        });
+    }
+    function CancelPlot() {
+        $.ajax({
+            url: "/Plot/CancelPlotBooking",
+            Type: "Get",
+            DataType: "JSON",
+            data: { PK_BookingId: $("#PK_BookingId").val() },
+            success: function (data) {
+                //     alert(data.Result);
+                window.location.href = '@Url.Action("PlotBooking", "Plot")';
+
+            }
+
+        });
+    }
+
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+
+    function onSiteChange() {
+
+        $("#divload").css({ 'display': '' });
+        var value = $('#SiteID').val();
+        var values = $('#SectorID').val();
+        var tr = [];
+        $.ajax({
+            url: "/Plot/GetSiteDetails",
+            Type: "Get",
+            DataType: "JSON",
+            data: { SiteID: value },
+            success: function (data) {
+
+                $("#divload").css({ 'display': 'none' });
+                var j = 1;
+                if (data.Result == "yes") {
+                    $('#Rate').val(data.Rate);
+                    $("#SectorID").html(""); // clear before appending new list
+                    $("#SectorID").empty();
+                    $("#SectorID").append(
+                          $('<option></option>').val(0).html('Select Phase'));
+                    $.each(data.ddlSector, function (index, Sectorcount) {
+                        $("#SectorID").append(
+                              $('<option></option>').val(Sectorcount.Value).html(Sectorcount.Text));
+
+                    });
+
+                }
+                else {
+                    $("#SectorID").empty();
+                    $('#Rate').val('');
+                }
+
+
+            }
+
+        });
+
+    }
+
+    function onSectorChange() {
+
+        $("#divload").css({ 'display': '' });
+        var siteID = $('#SiteID').val();
+        var sectorID = $('#SectorID').val();
+        $.ajax({
+            url: '/Plot/GetBlockList', type: 'post', dataType: 'json',
+            data: { 'SiteID': siteID, 'sectorID': sectorID },
+            success: function (data) {
+                $("#divload").css({ 'display': 'none' });
+                $("#BlockID").html(""); // clear before appending new list
+                $("#BlockID").empty();
+                $("#BlockID").append(
+                      $('<option></option>').val(0).html('Select Block'));
+                $.each(data.lstBlock, function (index, BlockCount) {
+                    $("#BlockID").append(
+                          $('<option></option>').val(BlockCount.Value).html(BlockCount.Text));
+                });
+
+            }
+
+        });
+    }
+
+</script>
+
+
+

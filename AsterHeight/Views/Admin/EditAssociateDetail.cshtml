@@ -1,0 +1,265 @@
+﻿@model AsterHeight.Models.Home
+@{
+    ViewBag.Title = "EditAssociateDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("EditAssociateDetail", "Admin", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <div id="divload" class="loader"></div>
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Associate</li>
+            <li class="breadcrumb-item">Edit Associate Detail</li>
+        </ul>
+    </section>
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Edit Associate Detail</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @* <div class="input-field col m3 s12">
+                            <label for="myCheck">Already Customer ?:</label>
+                            <input type="checkbox" id="customCheck1" onchange="valueChanged(this)">
+                            @*<div class="custom-control custom-checkbox">
+                                    <label class="custom-control-label" for="customCheck1">Already Customer ?</label>
+                                    <input type="checkbox" class="custom-control-input" >
+                                </div>
+                                            </div>*@
+
+                        <div class="input-field col m3 s12" id="CustID" style="display:none">
+                            <div class="form-group">
+                                Customer Id <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.CustomerID, new { @class = "form-control", @onchange = "getCustomerdetails(this);" })
+                                @Html.HiddenFor(m => m.LoginId)
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12" id="CustName" style="display:none">
+                            <div class="form-group Cust">
+                                Customer Name <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Sponsor Id <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.SponsorId, new { @class = "form-control", @onchange = "getsponsordetails(this);", @readonly = "true" })
+                                @Html.HiddenFor(m => m.LoginId)
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Sponsor Name <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.SponsorName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12" style="display:none">
+                            <div class="form-group">
+                                Leg <span style="color: red">*</span> &nbsp;&nbsp;
+                                <input type="radio" value="L" checked="checked" id="left" name="Leg" />
+                                Left &nbsp;&nbsp;
+                                <input type="radio" value="R" id="right" name="Leg" />
+                                Right
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                First Name <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @Placeholder = "First Name" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Last Name
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @Placeholder = "Last Name" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Email Id
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Placeholder = "Email id" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Mobile No <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control", @Placeholder = "Mobile No", @Maxlength = "10", @onkeypress = "return isNumberKey(event);" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Gender
+                                @Html.DropDownListFor(m => m.Gender, new SelectList(ViewBag.ddlgender, "Value", "Text"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Pan Card
+                                @Html.TextBoxFor(m => m.PanCard, new { @class = "form-control", @Placeholder = "Pan Card", @Maxlength = "10"/*, @onchange = "return validatepan(event);"*/})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col m12 s12">
+                            <div class="form-group">
+                                Address
+                                @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @Placeholder = "Address" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Pincode
+                                @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @Placeholder = "PinCode", @onchange = "return getstatecity();" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                State
+                                @Html.TextBoxFor(m => m.State, new { @class = "form-control", @Placeholder = "State" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                City
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control", @Placeholder = "City" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Account Holder Name
+                                @Html.TextBoxFor(m => m.AccountHolderName, new { @class = "form-control", @Placeholder = "Account Holder Name" })
+
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Bank Name
+                                @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @Placeholder = "Bank Name" })
+
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Bank Branch
+                                @Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @Placeholder = "Bank Branch" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Bank Account No.
+                                @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", @Placeholder = "Bank Account No." })
+
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                IFSC Code
+                                @Html.TextBoxFor(m => m.IFSC, new { @class = "form-control", @Placeholder = "State" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-6 form-group">
+                            @Html.HiddenFor(m => m.UserID, new { @Value = @Model.UserID })
+                            <input type="submit" id="btnUpdate" class="btn btn-success" name="btnUpdate" value="Update" onclick="return editProfile()" />
+
+                            <br />
+                        </div>
+                        <br />
+                        <p style="color: red">@TempData["Registration"] </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function editProfile() {
+        $("#customCheck1").attr("disabled", false);
+        $(".errortext").removeClass("errortext");
+        if ($('#FirstName').val() == '') {
+            $("#FirstName").addClass('errortext');
+            $('#FirstName').focus();
+            return false;
+        }
+        if ($('#Mobile').val() == '') {
+            $("#Mobile").addClass('errortext');
+            $('#Mobile').focus();
+            return false;
+        }
+        //if ($('#AccountNumber').val() == '') {
+        //    $("#AccountNumber").addClass('errortext');
+        //    $('#AccountNumber').focus();
+        //    return false;
+        //}
+        //if ($('#IFSC').val() == '') {
+        //    $("#IFSC").addClass('errortext');
+        //    $('#IFSC').focus();
+        //    return false;
+        //}
+        //if ($('#BankName').val() == '') {
+        //    $("#BankName").addClass('errortext');
+        //    $('#BankName').focus();
+        //    return false;
+        //}
+        //if ($('#BankBranch').val() == '') {
+        //    $("#BankBranch").addClass('errortext');
+        //    $('#BankBranch').focus();
+        //    return false;
+        //}
+        return true;
+    }
+</script>
+<script>
+    function getstatecity() {
+        debugger;
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: "/Admin/GetStateCity",
+            Type: "Get",
+            DataType: "JSON",
+            data: { Pincode: $("#Pincode").val() },
+            success: function (data) {
+                if (data.Result == "1") {
+                    $("#State").val(data.State);
+                    $("#City").val(data.City);
+                }
+                else {
+                    $("#State").val('');
+                    $("#City").val('');
+                    $("#Pincode").val('');
+                    $("#Pincode").addClass('errortext');
+                    $('#Pincode').focus();
+                    alert(data.Result);
+
+                }
+
+
+            }
+
+        });
+    }
+</script>

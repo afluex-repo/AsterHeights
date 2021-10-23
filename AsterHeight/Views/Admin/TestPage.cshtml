@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "TestPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TestPage</h2>
+<div style="width:90%; margin:0 auto;">
+    <table id="myTable" width="100%">
+        <thead>
+            <tr>
+                <th>PK_UserID</th>
+                <th>LoginId</th>
+                <th>Password</th>
+                <th>FirstName</th>
+            </tr>
+        </thead>
+    </table>
+
+</div>
+
+
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+        $("#myTable").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/admin/LoadData",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                    { "data": "PK_UserID", "name": "PK_UserID", "autoWidth": true },
+                    { "data": "LoginId", "name": "LoginId", "autoWidth": true },
+                    { "data": "Password", "name": "Password", "autoWidth": true },
+                    { "data": "FirstName", "name": "FirstName", "autoWidth": true } 
+            ]
+        });
+    });
+</script>

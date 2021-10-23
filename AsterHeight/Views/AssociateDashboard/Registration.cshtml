@@ -1,0 +1,750 @@
+﻿@model AsterHeight.Models.Home
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/AssociateLayout.cshtml";
+}
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>
+<div class="loader" id="divload"></div>
+
+@using (Html.BeginForm("Registration", "AssociateDashboard", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Associate</li>
+            <li class="breadcrumb-item">Registration</li>
+        </ul>
+    </section>
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Associate Registration</h4>
+
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+                            <div class="input-field col m3 s12">
+                                <label for="myCheck">Already Customer ?:</label>
+                                <input type="checkbox" id="customCheck1" onchange="valueChanged(this)">
+                            </div>
+
+                            <div class="input-field col m3 s12" id="CustID" style="display:none">
+                                <div class="form-group">
+                                    Customer Id <span style="color: red">*</span>
+                                    @Html.TextBoxFor(m => m.CustomerID, new { @class = "form-control", @onchange = "getCustomerdetails(this);" })
+                                    @Html.HiddenFor(m => m.LoginId)
+                                </div>
+                            </div>
+                            <div class="input-field col m3 s12" id="CustName" style="display:none">
+                                <div class="form-group Cust">
+                                    Customer Name <span style="color: red">*</span>
+                                    @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="row ">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Sponsor Id <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.SponsorId, new { @class = "form-control", @onchange = "getsponsordetails(this);" })
+                                @Html.HiddenFor(m => m.LoginId)
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Sponsor Name <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.SponsorName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Leg <span style="color: red">*</span> &nbsp;&nbsp;
+                                <input type="radio" value="Left" checked="checked" id="left" name="Leg" />
+                                Left &nbsp;&nbsp;
+                                <input type="radio" value="Right" id="right" name="Leg" />
+                                Right
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                First Name <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @Placeholder = "First Name" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Last Name
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @Placeholder = "Last Name" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Email Id
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Placeholder = "Email id" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Mobile No <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control", @Placeholder = "Mobile No", @Maxlength = "10", @onkeypress = "return isNumberKey(event);" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Gender
+                                @Html.DropDownListFor(m => m.Gender, new SelectList(ViewBag.ddlgender, "Value", "Text"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Pan Card
+                                @Html.TextBoxFor(m => m.PanCard, new { @class = "form-control", @Placeholder = "Pan Card", @Maxlength = "10"/*, @onchange = "return validatepan(event);"*/})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col m12 s12">
+                            <div class="form-group">
+                                Address
+                                @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @Placeholder = "Address" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m3 s12" id="txtAmount">
+                            <div class="form-group">
+                                Amount
+                                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @Value = "1000", @readonly = true })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12" id="txtPayment">
+                            Payment Mode <span style="color: red">*</span>
+                            @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlpaymentmode, "Value", "Text"), new { @class = "form-control", @onchange = "getpaymentdetails();" })
+                        </div>
+                        <div class="input-field col m3 s12" id="txtPayment">
+                            Payment Date <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.PaymentDate, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group" id="divtransactiono" style="display: none">
+                            <span id="txnNo"></span> <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.TransactionNo, new { @class = "form-control", @Placeholder = "Mobile Number", @maxlength = "50" })
+                        </div>
+                        <div class="col-md-3 form-group" id="divPaymentDate" style="display: none">
+                            <span id="txndt"></span><span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.TransactionDate, new { @class = "form-control", @Placeholder = "Date", @Readonly = "readonly" })
+
+                        </div>
+                        <div class="input-field col-md-3" id="divAssociateId" style="display: none">
+                            <div class="form-group">
+                                <span id="txnAssociateId"></span> <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.AssociateLoginID, new { @class = "form-control", @Placeholder = "Associate Id", @maxlength = "50", @onchange = "return getAssociateName();" })
+                                @Html.HiddenFor(m => m.AssociateID)
+                            </div>
+                        </div>
+                        <div class="input-field col-md-3" id="divAssociateName" style="display: none">
+                            <div class="form-group">
+                                <span id="txnAssociateName"></span> <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.AssociateName, new { @class = "form-control", @Placeholder = "Associate Name", @maxlength = "50", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="divbookingno" style="display: none">
+                            <div class="form-group">
+                                Reference Booking No. <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.BookingNo, new { @class = "form-control", @onchange = "checkBookingNo(this);" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 form-group" id="divbankname" style="display: none">
+
+                            Bank Name<span style="color: red">*</span>
+
+                            @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @maxlength = "100", @Placeholder = "Bank Name" })
+
+                        </div>
+                        <div class="col-md-3 form-group" id="divbankbranch" style="display: none">
+
+                            Bank Branch <span style="color: red">*</span>
+
+                            @Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @maxlength = "100", @Placeholder = "Bank Branch" })
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-md-6 form-group">
+
+                            @if (Model.UserID == null)
+                            {
+                                <input type="button" id="Confirm" onclick="return confirmregistration();" class="btn btn-success" name="Confirm" value="Confirm">
+                                <input type="button" id="Register" onclick="return saveregistration();" class="btn btn-success" style="display: none" name="Register" value="Register">
+
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(m => m.UserID, new { @Value = @Model.UserID })
+                                <input type="button" id="Confirm" onclick="return confirmregistration();" class="btn btn-success" name="Confirm" value="Confirm">
+
+                                <input type="submit" id="btnUpdate" class="btn btn-success" name="btnUpdate" value="Update" onclick="return editProfile()" />
+
+                            }
+
+
+                            <input type="button" id="Edit" onclick="editregistration();" style="display: none" class="btn btn-info" name="Edit" value="Edit">
+                            <br />
+
+                        </div>
+                        <br />
+                        <p style="color: red">@TempData["AssociateRegistration"] </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="./../AdminPanelCss/bower_components/jquery/dist/jquery.min.js"></script>
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+
+    });
+    function valueChanged() {
+        if ($('#customCheck1').is(":checked")) {
+            $("#CustID").show();
+            $("#CustName").show();
+            $("#txtAmount").hide();
+            $("#txtPayment").hide();
+        }
+        else {
+            $('#CustomerID').val('');
+            $('#CustomerName').val('');
+            $("#CustID").hide();
+            $("#CustName").hide();
+            $("#CustID").val();
+            $("#CustName").hide();
+            $("#txtAmount").show();
+            $("#txtPayment").show();
+            $("#txtAmount").val(1000);
+        }
+
+    }
+    function editProfile() {
+        $("#customCheck1").attr("disabled", false);
+        $(".errortext").removeClass("errortext");
+        if ($('#FirstName').val() == '') {
+            $("#FirstName").addClass('errortext');
+            $('#FirstName').focus();
+            return false;
+        }
+        if ($('#Mobile').val() == '') {
+            $("#Mobile").addClass('errortext');
+            $('#Mobile').focus();
+            return false;
+        }
+        //if ($('#AccountNumber').val() == '') {
+        //    $("#AccountNumber").addClass('errortext');
+        //    $('#AccountNumber').focus();
+        //    return false;
+        //}
+        //if ($('#IFSC').val() == '') {
+        //    $("#IFSC").addClass('errortext');
+        //    $('#IFSC').focus();
+        //    return false;
+        //}
+        //if ($('#BankName').val() == '') {
+        //    $("#BankName").addClass('errortext');
+        //    $('#BankName').focus();
+        //    return false;
+        //}
+        //if ($('#BankBranch').val() == '') {
+        //    $("#BankBranch").addClass('errortext');
+        //    $('#BankBranch').focus();
+        //    return false;
+        //}
+
+        return true;
+    }
+
+    function validatepan(event) {
+        $(".errortext").removeClass("errortext");
+        var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+        var txtpan = $('#PanCard').val();
+        if (txtpan.length == 10) {
+            if (txtpan.match(regExp)) {
+
+            }
+            else {
+                $("#PanCard").addClass('errortext');
+                $('#PanCard').focus();
+                $('#PanCard').val('');
+                alert('Please enter valid PanNo');
+
+            }
+        }
+        else {
+            $("#PanCard").addClass('errortext');
+            $('#PanCard').focus();
+            $('#PanCard').val('');
+            alert('Please enter 10 digits for a valid PAN number');
+
+        }
+    }
+    function getpaymentdetails() {
+        if ($('#PaymentMode').val() == "1") {
+            $("#TransactionNo").val('');
+            $("#TransactionDate").val('');
+            $("#BankName").val('');
+            $("#BankBranch").val('');
+            $("#divPaymentDate").hide();
+            $("#divtransactiono").hide();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $("#divbookingno").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+        }
+       else if ($('#PaymentMode').val() == "2") {
+            $('#txnNo').html('Cheque No.');
+            $('#txndt').html('Cheque Date');
+            $("#divPaymentDate").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbankbranch").show();
+            $("#divbookingno").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionNo").attr("placeholder", "Cheque No.");
+            $("#TransactionDate").attr("placeholder", "Cheque Date");
+        }
+        else if ($('#PaymentMode').val() == "3") {
+            $('#txndt').html('NEFT Date');
+            $('#txnNo').text('NEFT No.');
+            $("#divPaymentDate").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbankbranch").show();
+            $("#divbookingno").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionNo").attr("placeholder", "NEFT No.");
+            $("#TransactionDate").attr("placeholder", "NEFT Date");
+        }
+        else if ($('#PaymentMode').val() == "4") {
+            $('#txndt').html('DD Date');
+            $('#txnNo').text('DD No.');
+            $("#divPaymentDate").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbookingno").hide();
+            $("#divbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionNo").attr("placeholder", "DD No.");
+            $("#TransactionDate").attr("placeholder", "DD Date");
+        }
+        else if ($('#PaymentMode').val() == "5") {
+            $('#txndt').html('RTGS Date');
+            $('#txnNo').text('RTGS No.');
+            $("#divPaymentDate").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbookingno").hide();
+            $("#divbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionNo").attr("placeholder", "RTGS No.");
+            $("#TransactionDate").attr("placeholder", "RTGS Date");
+        }
+        else if ($('#PaymentMode').val() == "6") {
+
+            $('#txndt').html('IMPS Date');
+            $('#txnNo').text('IMPS No.');
+            $("#divPaymentDate").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbookingno").hide();
+            $("#divbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionNo").attr("placeholder", "IMPS No.");
+            $("#TransactionDate").attr("placeholder", "IMPS Date");
+        }
+        else if ($('#PaymentMode').val() == "7") {
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentDate").hide();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $("#divbookingno").hide();
+            $("#divPaymentMode").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionNo").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == "8") {
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentDate").hide();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $("#divbookingno").hide();
+            $("#divPaymentDate").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionDate").val('');
+            $("#BankName").val('');
+            $("#BankBranch").val('');
+            $("#TransactionNo").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == "9") {
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentDate").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $("#divbookingno").hide();
+            $("#divPaymentDate").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionDate").val('');
+            $("#BankName").val('');
+            $("#BankBranch").val('');
+            $("#TransactionNo").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == "10") {
+            $('#txndt').html('UPI Date');
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentDate").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $("#divbookingno").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionDate").val('');
+            $("#BankName").val('');
+            $("#BankBranch").val('');
+            $("#TransactionNo").attr("placeholder", "Mobile No. / UPI ID");
+            $("#TransactionDate").attr("placeholder", "UPI Date");
+        }
+        else if ($('#PaymentMode').val() == "11") {
+            $('#txndt').html('Transaction Date');
+            $('#txnNo').text('Reciept No.');
+            $("#divPaymentDate").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbookingno").hide();
+            $("#divbankbranch").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionNo").val('');
+            $("#TransactionDate").val('');
+            $("#TransactionNo").attr("placeholder", "Reciept No.");
+            $("#TransactionDate").attr("placeholder", "Transaction Date");
+        }
+        else if ($('#PaymentMode').val() == "13") {
+            $('#txnAssociateId').html('Associate Id');
+            $('#txnAssociateName').text('Associate Name');
+            $("#divPaymentDate").hide();
+            $("#divtransactiono").hide();
+            $("#divbankname").hide();
+            $("#divbookingno").hide();
+            $("#divbankbranch").hide();
+            $("#divAssociateId").show();
+            $("#divAssociateName").show();
+            $("#TransactionNo").val('');
+            $("#TransactionDate").val('');
+            $("#AssociateLoginID").attr("placeholder", "Associate Id");
+            $("#AssociateName").attr("placeholder", "AssociateName");
+        }
+            //else if ($('#PaymentMode').val() == "12") {
+            //    $("#divPaymentDate").hide();
+            //    $("#divbookingno").show();
+            //    $("#divtransactiono").hide();
+            //    $("#divbankname").hide();
+            //    $("#divbankbranch").hide();
+            //    $("#divPaymentDate").hide();
+            //}
+        else {
+            $("#divPaymentDate").hide();
+            $("#divtransactiono").hide();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $("#divbookingno").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#TransactionNo").val('');
+            $("#TransactionDate").val('');
+            $("#BankName").val('');
+            $("#BankBranch").val('');
+        }
+    }
+    function confirmregistration() {
+        $(".errortext").removeClass("errortext");
+        if ($('#SponsorId').val() == '') {
+            $("#SponsorId").addClass('errortext');
+            $('#SponsorId').focus();
+            return false;
+        }
+        if ($('#FirstName').val() == '') {
+            $("#FirstName").addClass('errortext');
+            $('#FirstName').focus();
+            return false;
+        }
+        if ($('#MobileNo').val() == '') {
+            $("#MobileNo").addClass('errortext');
+            $('#MobileNo').focus();
+            return false;
+        }
+        
+        debugger
+        //if ($('#customCheck1').is(':not(:checked)')) {
+            if ($('#PaymentMode').val() == '0') {
+                $("#PaymentMode").addClass('errortext');
+                $('#PaymentMode').focus();
+                return false;
+            }
+                if ($('#PaymentMode').val() != 1 && $('#PaymentMode').val() != 13) {
+                    if ($('#TransactionNo').val() == '') {
+                        $("#TransactionNo").addClass('errortext');
+                        $('#TransactionNo').focus();
+                        $("#divload").css({ 'display': 'none' });
+                        return false;
+                    }
+                    if ($('#PaymentMode').val() != 1 && $('#TransactionNo').val() == '') {
+                        if ($('#TransactionDate').val() == '') {
+                            $("#TransactionDate").addClass('errortext');
+                            $('#TransactionDate').focus();
+                            $("#divload").css({ 'display': 'none' });
+                            return false;
+                        }
+                        if ($('#BankName').val() == '') {
+                            $("#BankName").addClass('errortext');
+                            $('#BankName').focus();
+                            $("#divload").css({ 'display': 'none' });
+                            return false;
+                        }
+                        if ($('#BankBranch').val() == '') {
+                            $("#BankBranch").addClass('errortext');
+                            $('#BankBranch').focus();
+                            $("#divload").css({ 'display': 'none' });
+                            return false;
+                        }
+                    }
+                }
+        //}
+                if ($('#PaymentDate').val() == '') {
+                    $("#PaymentDate").addClass('errortext');
+                    $('#PaymentDate').focus();
+                    return false;
+                }
+        $("#customCheck1").attr("disabled", true);
+        $("#CustomerID").attr("disabled", "disabled");
+        $("#PaymentMethod").attr("disabled", "disabled");
+        $("#Commitment").attr("disabled", "disabled");
+        $("#MobileNo").attr("disabled", "disabled");
+        $("#FirstName").attr("disabled", "disabled");
+        $("#SponsorId").attr("disabled", "disabled");
+        $("#Email").attr("disabled", "disabled");
+        $("#LastName").attr("disabled", "disabled");
+        $("#Gender").attr("disabled", "disabled");
+        $("#PanCard").attr("disabled", "disabled");
+        $("#TransactionNo").attr("disabled", "disabled");
+        $("#PaymentMode").attr("disabled", "disabled");
+        $("#TransactionDate").attr("disabled", "disabled");
+        $("#BankName").attr("disabled", "disabled");
+        $("#BankBranch").attr("disabled", "disabled");
+        $("#Address").attr("disabled", "disabled");
+        $("#PaymentDate").attr("disabled", "disabled");
+        $('#Confirm').hide();
+        $('#Edit').show();
+        $('#Register').show();
+    }
+
+    function editregistration() {
+        $('#CustomerID').attr("disabled", false);
+        $("#customCheck1").attr("disabled", false);
+        $("#PaymentMethod").attr("disabled", false);
+        $("#Commitment").attr("disabled", false);
+        $("#MobileNo").attr("disabled", false);
+        $("#FirstName").attr("disabled", false);
+        $("#SponsorId").attr("disabled", false);
+        $("#Email").attr("disabled", false);
+        $("#LastName").attr("disabled", false);
+        $("#Gender").attr("disabled", false);
+        $("#PanCard").attr("disabled", false);
+        $("#Address").attr("disabled", false);
+        $("#PaymentMode").attr("disabled", false);
+        $("#PaymentDate").attr("disabled", false);
+        $('#Confirm').show();
+        $('#Edit').hide();
+        $('#Register').hide();
+
+    }
+    function saveregistration() {
+        debugger
+        $("#divload").show();
+        var Leg = "";
+        if ($('#left').prop('checked')) {
+            Leg = "L";
+        }
+        else {
+            Leg = "R";
+        }
+        $.ajax({
+            url: "/AssociateDashboard/RegistrationAction",
+            Type: "Get",
+            DataType: "JSON",
+            data: { CustomerID: $("#CustomerID").val(), SponsorId: $("#SponsorId").val(), FirstName: $("#FirstName").val(), LastName: $("#LastName").val(), Email: $("#Email").val(), MobileNo: $("#MobileNo").val(), PanCard: $("#PanCard").val(), Gender: $("#Gender").val(), OTP: $("#OTP").val(), Leg: Leg, Amount: $("#Amount").val(), PaymentMode: $("#PaymentMode").val(), TransactionNo: $("#TransactionNo").val(), BankName: $("#BankName").val(), BankBranch: $("#BankBranch").val(), TransactionDate: $("#TransactionDate").val(), AdjustmentId: $("#AssociateID").val(), PaymentDate: $("#PaymentDate").val(), Address: $("#Address").val() },
+            success: function (data) {
+                debugger;
+                if (data.Response == "1") {
+                    window.location.href = '@Url.Action("ConfirmRegistration", "AssociateDashboard")';
+                }
+                else {
+                    $("#divload").css({ 'display': 'none' });
+                    alert(data.Response);
+                }
+
+            }
+        });
+    }
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function getsponsordetails(obj) {
+        $("#divload").css({ 'display': '' });
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: '/AssociateDashboard/GetSponserDetails',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { 'ReferBy': $(obj).val() },
+            success: function (response) {
+                if (response.Result == "Yes") {
+                    $("#divload").css({ 'display': 'none' });
+                    $('#SponsorName').val(response.DisplayName);
+                }
+                else {
+                    $("#divload").css({ 'display': 'none' });
+                    $("#SponsorId").addClass('errortext');
+                    $('#SponsorName').val('');
+                    $('#SponsorId').val('');
+                    $('#SponsorId').focus();
+                    alert(response.Result);
+                }
+            }
+        })
+    }
+    $('#TopUpDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    $('#TransactionDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    $('#PaymentDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    
+    function getCustomerdetails(obj) {
+        $("#divload").css({ 'display': '' });
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: '/AssociateDashboard/GetCustomerDetails',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { 'ReferBy': $(obj).val() },
+            success: function (response) {
+                if (response.Result == "Yes") {
+                    $("#divload").css({ 'display': 'none' });
+                    $('#CustomerName').val(response.DisplayName);
+                    //$('#SponsorId').val(response.LoginId);
+                    //$('#SponsorName').val(response.DisplayName);
+                    //$('#SponsorId').val(response.LoginId);
+                    $('#FirstName').val(response.FirstName);
+                    $('#LastName').val(response.LastName);
+                    $('#PanCard').val(response.PanNumber);
+                    $('#Email').val(response.Email);
+                    $('#MobileNo').val(response.Mobile);
+                    $("#Gender option:selected").text(response.Sex);
+                    $('#Amount').val('');
+
+                }
+                else {
+                    $("#divload").css({ 'display': 'none' });
+                    $("#SponsorId").addClass('errortext');
+                    $('#CustomerName').val('');
+                    $('#SponsorId').val('');
+                    $('#SponsorName').val('');
+                    $('#SponsorId').val('');
+                    $('#FirstName').val('');
+                    $('#LastName').val('');
+                    $('#PanCard').val('');
+                    $('#Email').val('');
+                    $('#MobileNo').val('');
+                    $('#Gender').val('');
+                    $('#Amount').val(1000);
+                    $('#SponsorId').focus();
+                    alert(response.Result);
+                }
+            }
+        })
+    }
+
+    function getAssociateName() {
+
+        $("#divload").css({ 'display': '' });
+        var sponsorID = $('#AssociateLoginID').val();
+        $.ajax({
+            url: '/AssociateDashboard/GetSponsorName', type: 'post', dataType: 'json',
+            data: { 'SponsorID': sponsorID },
+            success: function (data) {
+
+                $("#divload").css({ 'display': 'none' });
+                if (data.Result == "yes") {
+                    $("#AssociateName").val(data.SponsorName);
+                    $("#AssociateID").val(data.UserID);
+                    $("#SponsorName").removeClass('errortext');
+                    $("#AssociateLoginID").removeClass('errortext');
+                }
+                else if (data.Result == "no") {
+                    alert("Invalid Associate ID");
+                    $("#AssociateName").val('');
+                    $("#AssociateName").addClass('errortext');
+                    $("#AssociateLoginID").addClass('errortext');
+                    $('#AssociateLoginID').focus();
+                    $('#AssociateLoginID').val('');
+
+                }
+            }
+        });
+    }
+</script>

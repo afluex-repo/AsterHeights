@@ -1,0 +1,131 @@
+﻿@model AsterHeight.Models.Reports
+
+@{
+    ViewBag.Title = "Reward";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../files/assets/images/login-gif-11.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>
+<div class="loader" id="divload"></div>
+@using (Html.BeginForm("Reward", "AdminReports", FormMethod.Post, new { @id = "form1" }))
+{
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                Reports
+            </li>
+            <li class="breadcrumb-item">Reward</li>
+        </ul>
+    </section>
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>   Reward</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Login Id
+                            @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @placeholder = "Login Id" })
+                        </div>
+                        <div class="col-md-3">
+                            From Date
+                            @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @readonly = "abc" })
+                        </div>
+                        <div class="col-md-3">
+                            To Date
+                            @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @readonly = "abc" })
+                        </div>
+
+                        <div class="col-md-3">
+                            <br />
+                            <input type="submit" class="btn btn-info" value="Get Details" name="Search" />
+                        </div>
+
+                    </div>
+                    <br />
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>LoginId</th>
+                                <th>Name</th>
+                                <th>Reward</th>
+                                <th>Status</th>
+                                <th>RewardImage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.lstassociate != null)
+                                {
+                                    int i = 1;
+                                    foreach (var Item in Model.lstassociate)
+                                    {
+                                        <tr class="text-left">
+                                            <td>@i</td>
+                                            <td>@Item.LoginId</td>
+                                            <td>@Item.Name</td>
+                                            <td>@Item.RewardName</td>
+                                            <td>@Item.Status</td>
+                                            <td>
+
+                                                <img src="@Item.RewardImage" height="100" width="100" />
+
+                                            </td>
+
+                                        </tr>
+                                        i++;
+                                    }
+
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+                    <input type="hidden" id="txtno" />
+                    <input type="hidden" id="txtDt" />
+                    <input type="hidden" id="txtPdDt" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true
+    });
+</script>

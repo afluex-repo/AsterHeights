@@ -1,0 +1,84 @@
+﻿@model AsterHeight.Models.Reports
+
+@{
+    ViewBag.Title = "RoyalityClub";
+    Layout = "~/Views/Shared/AssociateLayout.cshtml";
+}
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../files/assets/images/login-gif-11.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+
+    .label-danger {
+        background-color: #d9534f;
+    }
+</style>
+<div class="loader" id="divload"></div>
+@using (Html.BeginForm("RoyalityClub", "User", FormMethod.Post, new { @id = "form1" }))
+{    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Reward</li>
+            <li class="breadcrumb-item">Royality Club</li>
+        </ul>
+    </section>
+
+    <div class="section-body">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- HTML5 Export Buttons table start -->
+                        <div class="card-block" style="margin-left:5px;margin-right:5px">
+                         
+                                        @if (Model != null)
+                                        {
+                                            if (Model.lstReward != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-3">&nbsp;</div>
+                                                    <div class="col-md-6">
+                                                        <div class="card-header">
+                                                            <h4>Congratulations You are achiever of Royality Club !!</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">&nbsp;</div>
+                                                </div>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-3">&nbsp;</div>
+                                                    <div class="col-md-6">
+                                                        <div class="card-header">
+                                                            <h4>No Data Available</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">&nbsp;</div>
+                                                </div>
+                                               
+                                            }
+                                        }
+                                
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

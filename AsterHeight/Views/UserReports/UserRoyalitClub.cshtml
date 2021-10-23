@@ -1,0 +1,102 @@
+﻿@model AsterHeight.Models.User
+
+@{
+    ViewBag.Title = "UserRoyalitClub";
+    Layout = "~/Views/Shared/AssociateLayout.cshtml";
+}
+
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../files/assets/images/login-gif-11.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+
+    .label-danger {
+        background-color: #d9534f;
+    }
+</style>
+<div class="loader" id="divload"></div>
+@using (Html.BeginForm("UserRoyalitClub", "UserReport", FormMethod.Post, new { @id = "form1" }))
+{    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">User Report</li>
+            <li class="breadcrumb-item">User Royality Club List</li>
+        </ul>
+    </section>
+
+
+    <div class="section-body">
+
+        <div class="card">
+            <div class="card-header">
+                <h4>User Royality Club List</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- HTML5 Export Buttons table start -->
+                        <div class="card-block" style="margin-left:5px;margin-right:5px">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" data-page-length='50' id="tableExport" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>S No.</th>
+                                            <th>Royality Business</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.lstReward != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.lstReward)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>
+                                                            <img src="@Item.RewardImage" height="100" width="100" />
+                                                            <br />@Item.RewardName
+                                                        </td>
+                                                        <td>@Item.MatchingTarget</td>
+                                                        <td>@Item.LeftBusiness</td>
+                                                        <td>@Item.RightBusines</td>
+                                                        <td>@Item.QualifyDate</td>
+                                                        <td><label class="@Item.Contact">@Item.Status</label></td>
+
+                                                        <td>
+                                                            @if (Item.Status == "Achieved")
+                                                            {
+                                                                <a class="btn btn-info btn-sm" href="/User/ClaimReward/@Item.PK_RewardItemId" onclick="return confirm('Are you sure you wish to claim this Award?');">Claim</a>
+                                                                <a class="btn btn-warning btn-sm" href="/User/SkipReward/@Item.PK_RewardItemId" onclick="return confirm('Are you sure you wish to Skip this Award?');">Skip</a>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,327 @@
+﻿@model AsterHeight.Models.Customer
+@{
+    ViewBag.Title = "EditCustomerDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("EditCustomerDetail", "Customer", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+{
+<div id="divload" class="loader"></div>
+<section class="section">
+    <ul class="breadcrumb breadcrumb-style ">
+        <li class="breadcrumb-item">
+            <a href="#">
+                <i data-feather="home"></i>
+            </a>
+        </li>
+        <li class="breadcrumb-item">Customer</li>
+        <li class="breadcrumb-item">Edit Customer Detail</li>
+    </ul>
+</section>
+
+
+<div class="section-body">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Edit Customer Detail</h4>
+                <p style="color: red">
+                    @TempData["Registration"]
+                    @TempData["AssociateDetails"]
+                </p>
+            </div>
+            <div class="card-body">
+                <div class="row ">
+                    <div class="input-field col m6 s12" style="display:none">
+                        Branch<span style="color:red">*</span>
+                        @Html.DropDownListFor(m => m.BranchID, new SelectList(ViewBag.ddlBranch, "Value", "Text"), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="input-field col m6 s12">
+                        <div class="form-group">
+                            Sponsor ID<span style="color:red">*</span>
+                            @if (Model.UserID == null)
+                            {
+                                @Html.TextBoxFor(m => m.SponsorID, new { @class = "form-control", @Placeholder = "Sponsor ID", @onchange = "return getSponsorName();" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.SponsorID, new { @class = "form-control", @Placeholder = "Sponsor ID", @readonly = "readonly" })
+                            }
+                            @Html.HiddenFor(m => m.UserID)
+                        </div>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <div class="form-group">
+                            Sponsor Name<span style="color:red">*</span>
+                            @Html.TextBoxFor(m => m.SponsorName, new { @class = "form-control", @Placeholder = "Sponsor Name", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <div class="form-group">
+                            <br />
+                            Leg <span style="color: red">*</span> &nbsp;&nbsp;
+                            <input type="radio" value="L" checked="checked" id="left" name="Leg" />
+                            Left &nbsp;&nbsp;
+                            <input type="radio" value="R" id="right" name="Leg" />
+                            Right
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="row">
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            First Name<span style="color:red">*</span>
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @Placeholder = "First Name" })
+                        </div>
+                    </div>
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Last Name
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @Placeholder = "Last Name" })
+                        </div>
+                    </div>
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Mobile<span style="color:red">*</span>
+                            @Html.TextBoxFor(m => m.Contact, new { @class = "form-control", @Placeholder = "Mobile Number", @onkeypress = "return isNumberOrDecimal(event);", @maxlength = "10" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Email
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Placeholder = "Email" })
+                        </div>
+                    </div>
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Pan No.
+                            @Html.TextBoxFor(m => m.PanNo, new { @class = "form-control", @Placeholder = "PAN Number", @maxlength = "10", @onchange = "return validatePan();" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 s12">
+                        <div class="form-group">
+                            Address
+                            @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @Placeholder = "Address" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Pin Code
+                            @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @Placeholder = "Pincode", @onchange = "return getStateCity();", @onkeypress = "return isNumberOrDecimal(event);", @maxlength = "6" })
+
+                        </div>
+                    </div>
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            State
+                            @Html.TextBoxFor(m => m.State, new { @class = "form-control", @Placeholder = "State", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            City
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control", @Placeholder = "City", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Account Holder Name
+                            @Html.TextBoxFor(m => m.AccountHolderName, new { @class = "form-control", @Placeholder = "Account Holder Name" })
+
+                        </div>
+                    </div>
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Bank Name
+                            @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @Placeholder = "Bank Name" })
+
+                        </div>
+                    </div>
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Bank Branch
+                            @Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @Placeholder = "Bank Branch" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            Bank Account No.
+                            @Html.TextBoxFor(m => m.AccountNo, new { @class = "form-control", @Placeholder = "Bank Account No." })
+
+                        </div>
+                    </div>
+                    <div class="input-field col m3 s12">
+                        <div class="form-group">
+                            IFSC Code
+                            @Html.TextBoxFor(m => m.IFSCCode, new { @class = "form-control", @Placeholder = "State" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col m8 s12" id="divdesc">
+                        <div class="form-group">
+                            Profile Photo
+                            <input type="file" name="profilePhoto" id="fuProfile" onchange="readURL(this)"/>
+                            @if (Model.Photo != null && Model.Photo != "")
+                            {
+                                <img src="@Model.Photo" id="ContentPlaceHolder1_imgProfileImage" class="fileinput-preview thumbnail" style="width: 150px; height: 100px;" />
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+                <br />
+
+                <div class="form-group row">
+                    <div class="input-field col m6 s12">
+                            @Html.HiddenFor(m => m.UserID, new { @Value = @Model.UserID })
+                            <input class="btn btn-success pull-left" type="submit" onclick="return validateform();" value="Update" id="btnUpdate" name="btnUpdate" />
+                        <a class="btn btn-info" href="/Customer/CustomerList" style="margin-left:5px">Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script>
+ function validateform() {
+        $("#divload").css({ 'display': 'none' });
+        $(".errortext").removeClass("errortext");
+        if ($('#BranchID').val() == '0') {
+            $("#BranchID").addClass('errortext');
+            $('#BranchID').focus();
+            return false;
+        }
+        if ($('#SponsorID').val() == '') {
+            $("#SponsorID").addClass('errortext');
+            $('#SponsorID').focus();
+            return false;
+        }
+        if ($('#FirstName').val() == '') {
+            $("#FirstName").addClass('errortext');
+            $('#FirstName').focus();
+            return false;
+        }
+        if ($('#Contact').val() == '') {
+            $("#Contact").addClass('errortext');
+            $('#Contact').focus();
+            return false;
+        }
+        $("#divload").css({ 'display': '' });
+        return true;
+ }
+ function readURL(input) {
+     debugger;
+     if (input.files && input.files[0]) {
+         var reader = new FileReader();
+         reader.onload = function (e) {
+             $('#ContentPlaceHolder1_imgProfileImage')
+                 .attr('src', e.target.result);
+         };
+         reader.readAsDataURL(input.files[0]);
+     }
+ }
+
+ function isNumberOrDecimal(evt) {
+     var charCode = (evt.which) ? evt.which : evt.keyCode;
+     if (charCode != 46 && charCode > 31
+       && (charCode < 48 || charCode > 57))
+         return false;
+
+     return true;
+ }
+
+ function getStateCity() {
+
+     var pincode = $('#Pincode').val();
+     $.ajax({
+         url: '/Master/GetStateCity', type: 'post', dataType: 'json',
+         data: { 'Pincode': pincode },
+         success: function (data) {
+             if (data.Result == "yes") {
+                 $("#State").val(data.State);
+                 $("#City").val(data.City);
+                 $("#State").removeClass('errortext');
+                 $("#City").removeClass('errortext');
+                 $("#Pincode").removeClass('errortext');
+             }
+             else if (data.Result == "no") {
+                 alert("Invalid Pincode");
+                 $("#State").val('');
+                 $("#City").val('');
+                 $("#State").addClass('errortext');
+                 $("#City").addClass('errortext');
+                 $("#Pincode").addClass('errortext');
+                 $('#Pincode').focus();
+                 $('#Pincode').val('');
+
+             }
+         }
+
+     });
+ }
+ function validatePan() {
+     var panVal = $('#PanNo').val();
+     var regpan = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+
+     if (regpan.test(panVal)) {
+         $("#PanNo").removeClass('errortext');
+     } else {
+         alert("Invalid PAN Number");
+         $("#PanNo").val('');
+         $("#PanNo").addClass('errortext');
+     }
+ }
+ function getSponsorName() {
+
+     $("#divload").css({ 'display': '' });
+     var sponsorID = $('#SponsorID').val();
+     $.ajax({
+         url: '/Customer/GetSponsorName', type: 'post', dataType: 'json',
+         data: { 'SponsorID': sponsorID },
+         success: function (data) {
+
+             $("#divload").css({ 'display': 'none' });
+             if (data.Result == "yes") {
+                 $("#SponsorName").val(data.SponsorName);
+                 $("#UserID").val(data.UserID);
+                 $("#SponsorName").removeClass('errortext');
+                 $("#SponsorID").removeClass('errortext');
+             }
+             else if (data.Result == "no") {
+                 alert("Invalid Sponsor ID");
+                 $("#SponsorName").val('');
+                 $("#SponsorName").addClass('errortext');
+                 $("#SponsorID").addClass('errortext');
+                 $('#SponsorID').focus();
+                 $('#SponsorID').val('');
+
+             }
+         }
+     });
+ }
+</script>

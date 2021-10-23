@@ -1,0 +1,276 @@
+﻿@model AsterHeight.Models.Profile
+
+@{
+    ViewBag.Title = "NewProfile";
+    Layout = "~/Views/Shared/AssociateLayout.cshtml";
+}
+<style>
+    b, strong {
+    font-weight: bolder;
+    font-size: 18px;
+}
+    span.float-right.text-muted {
+    font-size: 18px;
+}
+</style>
+@using (Html.BeginForm("NewProfile", "UserReport", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <div class="loader" id="divload"></div>
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <h4 class="page-title m-b-0">My Profile</h4>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="index.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Profile</li>
+        </ul>
+
+    </section>
+    <div class="section-body">
+        <div class="row mt-sm-4">
+            <div class="col-12 col-md-12 col-lg-4">
+                <div class="card author-box">
+                    <div class="card-body">
+                        <div class="author-box-center">
+                            @if (Model.ProfilePicture == "")
+                            {
+                                <img alt="image" style="width:200px;height:320px;" src="~/AssociatePanelcss/assets/img/icon.png" class="rounded-circle author-box-picture">
+                            }
+                            else
+                            {
+                                <img alt="image" style="width:200px;height:320px;" src="@Model.ProfilePicture" class="rounded-circle author-box-picture">
+                            }
+
+                            <div class="clearfix"></div>
+                            <div class="author-box-name">
+                                <a href="#">@Model.FirstName @Model.LastName</a>
+                            </div>
+                            <div class="author-box-job"></div>
+                        </div>
+                        <div class="text-center">
+                            <div class="author-box-description">
+                                <p>
+                                  
+                                </p>
+                            </div>
+                            <div class="mb-2 mt-3">
+                                <div class="text-small font-weight-bold"></div>
+                            </div>
+                            <a href="#" class="btn btn-social-icon mr-1 btn-facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="btn btn-social-icon mr-1 btn-twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="btn btn-social-icon mr-1 btn-github">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="btn btn-social-icon mr-1 btn-instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <div class="w-100 d-sm-none"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Account Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="py-4">
+                            <p class="clearfix">
+                                <span class="float-left">
+                                   Account Number
+                                </span>
+                                <span class="float-right text-muted">
+                                    @Model.AccountNumber
+                                </span>
+                            </p>
+                            <p class="clearfix">
+                                <span class="float-left">
+                                  Account Holder Name
+                                </span>
+                                <span class="float-right text-muted">
+                                    @Model.AccountHolderName
+                                </span>
+                            </p>
+                            <p class="clearfix">
+                                <span class="float-left">
+                                 Bank Name
+                                </span>
+                                <span class="float-right text-muted">
+                                    @Model.BankName
+                                </span>
+                            </p>
+                            <p class="clearfix">
+                                <span class="float-left">
+                                 Branch Name
+                                </span>
+                                <span class="float-right text-muted">
+                                    <span>@Model.BankBranch</span>
+                                </span>
+                            </p>
+                            <p class="clearfix">
+                                <span class="float-left">
+                                   IFSC Code
+                                </span>
+                                <span class="float-right text-muted">
+                                  @Model.IFSC
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-12 col-lg-8">
+                <div class="card">
+                    <div class="padding-20">
+                        <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="profile-tab2" data-toggle="tab" href="#settings" role="tab" aria-selected="true"><strong>Personal Information</strong></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content tab-bordered" id="myTab3Content">
+                            <div class="tab-pane fade  active show" id="about" role="tabpanel" aria-labelledby="home-tab2">
+                                <div class="row">
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Login Id</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                                @Model.LoginId
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Full Name</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                             @Model.FirstName @Model.LastName
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Mobile</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                               @Model.Mobile
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Email</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                               @Model.EmailId
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Pan Number</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                                @Model.PanNumber
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Date of Birth</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                                @Model.DOB
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Address</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                                @Model.Address
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="padding-20">
+                        <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                            <li class="nav-item">
+                                <span class="nav-link active" id="profile-tab2" data-toggle="tab" href="#settings" role="tab" aria-selected="true"><strong>Sponsor Details</strong></span>
+                            </li>
+                        </ul>
+                        <div class="tab-content tab-bordered" id="myTab3Content">
+                            <div class="tab-pane fade  active show" id="about" role="tabpanel" aria-labelledby="home-tab2">
+                                <div class="row">
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Sponsor Id</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                                @Model.SponsorId
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Sponsor Name</strong>
+</span>
+                                            <span class="float-right text-muted">
+                                                @Model.SponsorName
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding-20">
+                        <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                            <li class="nav-item">
+                                <span class="nav-link active" id="profile-tab2" data-toggle="tab" href="#settings" role="tab" aria-selected="true"><strong>Other Details</strong></span>
+                            </li>
+                        </ul>
+                        <div class="tab-content tab-bordered" id="myTab3Content">
+                            <div class="tab-pane fade  active show" id="about" role="tabpanel" aria-labelledby="home-tab2">
+                                <div class="row">
+                                    <div class="col-md-6 col-6 b-r">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                <strong>Date of Joining</strong>
+                                            </span>
+                                            <span class="float-right text-muted">
+                                                @Model.JoiningDate
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
