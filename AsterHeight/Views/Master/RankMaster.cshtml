@@ -1,0 +1,120 @@
+﻿@model AsterHeight.Models.Master
+
+@{
+    ViewBag.Title = "RankMaster";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("RankMaster", "Master", FormMethod.Post, new { @id = "form1" }))
+{
+
+
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Master</li>
+            <li class="breadcrumb-item">Rank Master</li>
+        </ul>
+    </section>
+    
+
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Rank Master</h4>
+
+                    <p style="color: red">
+                        @TempData["Rank"]
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="input-field col m6 s12">
+                            <div class="row ">
+                                <div class="input-field col m6 s12">
+                                    Rank Name<span style="color:red">*</span>
+                                    @Html.TextBoxFor(m => m.DesignationName, new { @class = "form-control", @Placeholder = "Rank Name" })
+                                </div>
+
+                                <div class="input-field col m6 s12">
+                                    Percentage<span style="color:red">*</span>
+                                    @Html.TextBoxFor(m => m.Percentage, new { @class = "form-control", @Placeholder = "Percentage", onkeypress = "return isNumberOrDecimal(event)" })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <br />
+                    <div class="form-group row">
+                        <div class="input-field col s12">
+                            @if (Model.DesignationID == null)
+                {
+                                <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(m => m.DesignationID, new { @Value = @Model.DesignationID })
+                                <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Update" id="btnUpdate" name="btnUpdate" />
+                            }
+                            <a class="btn btn-info" href="/Master/RankList">Back To List</a>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+}
+
+
+                <script>
+
+                    function validate() {
+                        $(".errortext").removeClass("errortext");
+
+                        if ($('#DesignationName').val() == '') {
+                            $("#DesignationName").addClass('errortext');
+                            $('#DesignationName').focus();
+                            return false;
+                        }
+                        if ($('#Percentage').val() == '') {
+                            $("#Percentage").addClass('errortext');
+                            $('#Percentage').focus();
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                    function isNumberOrDecimal(evt) {
+                        var charCode = (evt.which) ? evt.which : evt.keyCode;
+                        if (charCode != 46 && charCode > 31
+                          && (charCode < 48 || charCode > 57))
+                            return false;
+
+                        return true;
+                    }
+
+
+                </script>
+
+
+
+
+
+
+
+

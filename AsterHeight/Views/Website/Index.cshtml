@@ -1,0 +1,652 @@
+﻿@model AsterHeight.Models.Website
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/WebisteLayout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>AsterHeight Agro Farm  &amp; Organic Food </title>
+    <!-- Favicon -->
+    <link rel="icon" href="../WebsitePanelLayout/img/core-img/favicon.png">
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="../WebsitePanelLayout/style.css">
+    <style type="text/css" media="screen">
+        .project ul li {
+            padding: 12px;
+        }
+
+            .project ul li a {
+                color: #fff;
+            }
+
+            .project ul li:hover {
+                background-color: darkgreen;
+            }
+
+        .project .tab-content .tab-pane {
+            padding: 30px;
+        }
+
+        .project {
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <!-- ##### Header Area Start ##### -->
+    <!-- use this for popup-->
+    @*<div id="boxes">
+            <div clsass="home-pupup" style="" id="dialog" class="window">
+                <img src="../WebsitePanelLayout/img/popup.jpeg" class="img-fluid">
+
+            </div>
+            <div style="width: 100%; font-size: 32pt; color:white; height: auto; display: none; opacity: 0.8;" id="mask"></div>
+        </div>*@
+    <!-- use this for popup-->
+    <div class="hero-area">
+        <div class="welcome-slides owl-carousel">
+            <!-- Single Welcome Slides -->
+            <div class="single-welcome-slides bg-img bg-overlay jarallax" style="background-image: url(../WebsitePanelLayout/img/bg-img/new-slide-0007.jpg);">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-12 col-lg-10">
+                            <div class="welcome-content">
+                                <h2 data-animation="fadeInUp" data-delay="200ms">"Farming looks mighty easy when your plow is a pencil, and you're a thousand miles from the corn field.”</h2>
+                                <!--  <p data-animation="fadeInUp" data-delay="400ms">Mauris vestibulum dolor nec lacinia facilisis. Fusce interdum sagittis volutpat. Praesent eget varius ligula, malesuada eleifend purus. Aenean euismod est at mauris mollis ultricies.
+                                   Morbi arcu mi, dictum eu luala, dapibus
+                                   interdum mollis.</p> -->
+                                <a href="../../Website/ContactUs" class="btn famie-btn mt-4" data-animation="bounceInUp" data-delay="600ms">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="single-welcome-slides bg-img bg-overlay jarallax" style="background-image: url(../WebsitePanelLayout/img/bg-img/new-slide-0010.jpg);">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-12 col-lg-10">
+                            <div class="welcome-content">
+                                <h2 data-animation="fadeInUp" data-delay="200ms">"Farming might not be the first profession. But it’s a pretty close second.</h2>
+                                <!--  <p data-animation="fadeInUp" data-delay="400ms">Mauris vestibulum dolor nec lacinia facilisis. Fusce interdum sagittis volutpat. Praesent eget varius ligula, malesuada eleifend purus. Aenean euismod est at mauris mollis ultricies.
+                                   Morbi arcu mi, dictum eu luala, dapibus
+                                   interdum mollis.</p> -->
+                                <a href="../../Website/ContactUs" class="btn famie-btn mt-4" data-animation="bounceInUp" data-delay="600ms">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="single-welcome-slides bg-img bg-overlay jarallax" style="background-image: url(../WebsitePanelLayout/img/bg-img/new-slide-0008.jpg);">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-12 col-lg-10">
+                            <div class="welcome-content">
+                                <h2 data-animation="fadeInUp" data-delay="200ms">Club & Resort</h2>
+                                <!--  <p data-animation="fadeInUp" data-delay="400ms">Mauris vestibulum dolor nec lacinia facilisis. Fusce interdum sagittis volutpat. Praesent eget varius ligula, malesuada eleifend purus. Aenean euismod est at mauris mollis ultricies.
+                                   Morbi arcu mi, dictum eu luala, dapibus
+                                   interdum mollis.</p> -->
+                                <a href="../../Website/ContactUs" class="btn famie-btn mt-4" data-animation="bounceInUp" data-delay="600ms">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single-welcome-slides bg-img bg-overlay jarallax" style="background-image: url(../WebsitePanelLayout/img/bg-img/new-slide-0009.jpg);">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-12 col-lg-10">
+                            <div class="welcome-content">
+                                <h2 data-animation="fadeInUp" data-delay="200ms">Aesthetic* Life Style</h2>
+                                <!--  <p data-animation="fadeInUp" data-delay="400ms">Mauris vestibulum dolor nec lacinia facilisis. Fusce interdum sagittis volutpat. Praesent eget varius ligula, malesuada eleifend purus. Aenean euismod est at mauris mollis ultricies.
+                                   Morbi arcu mi, dictum eu luala, dapibus
+                                   interdum mollis.</p> -->
+                                <a href="../../Website/ContactUs" class="btn famie-btn mt-4" data-animation="bounceInUp" data-delay="600ms">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ##### Hero Area End ##### -->
+    <!-- ##### Famie Benefits Area Start ##### -->
+    <section class="famie-benefits-area section-padding-100-0 pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="benefits-thumbnail mb-50">
+
+                        <img src="../WebsitePanelLayout/img/bg-img/2.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <!-- Single Benefits Area -->
+                <div class="col-12 col-sm-4 col-lg">
+                    <div class="single-benefits-area wow fadeInUp mb-50" data-wow-delay="100ms">
+
+                        <img src="../WebsitePanelLayout/img/core-img/digger.png" alt="">
+                        <h5>Best Services</h5>
+                    </div>
+                </div>
+                <!-- Single Benefits Area -->
+                <div class="col-12 col-sm-4 col-lg">
+                    <div class="single-benefits-area wow fadeInUp mb-50" data-wow-delay="300ms">
+
+                        <img src="../WebsitePanelLayout/img/core-img/windmill.png" alt="">
+                        <h5>Farm Experiences</h5>
+                    </div>
+                </div>
+                <!-- Single Benefits Area -->
+                <div class="col-12 col-sm-4 col-lg">
+                    <div class="single-benefits-area wow fadeInUp mb-50" data-wow-delay="500ms">
+
+                        <img src="../WebsitePanelLayout/img/core-img/cereals.png" alt="">
+                        <h5>100% Natural</h5>
+                    </div>
+                </div>
+                <!-- Single Benefits Area -->
+                <div class="col-12 col-sm-4 col-lg">
+                    <div class="single-benefits-area wow fadeInUp mb-50" data-wow-delay="700ms">
+
+                        <img src="../WebsitePanelLayout/img/core-img/tractor.png" alt="">
+                        <h5>Farm Equipment</h5>
+                    </div>
+                </div>
+                <!-- Single Benefits Area -->
+                <div class="col-12 col-sm-4 col-lg">
+                    <div class="single-benefits-area wow fadeInUp mb-50" data-wow-delay="900ms">
+
+                        <img src="../WebsitePanelLayout/img/core-img/sunrise.png" alt="">
+                        <h5>Organic food</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Famie Benefits Area End ##### -->
+    <!-- ##### About Us Area Start ##### -->
+    <section class="about-us-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- About Us Content -->
+                <div class="col-12 col-md-8">
+                    <div class="about-us-content mb-100">
+                        <!-- Section Heading -->
+                        <div class="section-heading">
+                            <p>About us</p>
+                            <h2><span>Let Us</span> Tell You Our Story</h2>
+
+                            <img src="../WebsitePanelLayout/img/core-img/decor.png" alt="">
+                        </div>
+                        <p>
+                            AsterHeight Corporate is a leading with compelling impact towards excellence. With vision and experience in designing and building residential gated communities and investment opportunities. AsterHeight Corporate exhibits the most superior standards in terms of quality and yet remains affordable to the masses.
+                        </p>
+                        <a href="about-us.html" class="btn famie-btn mt-30">Read More</a>
+                    </div>
+                </div>
+                <!-- Famie Video Play -->
+                <div class="col-12 col-md-4">
+                    <div class="famie-video-play mb-100">
+                        <img src="../WebsitePanelLayout/img/about-home.jpg" alt="">
+                        <!-- Play Icon -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### About Us Area End ##### -->
+    <!-- ##### Services Area Start ##### -->
+    <section class="services-area d-flex flex-wrap">
+        <!-- Service Thumbnail -->
+
+        <div class="services-thumbnail bg-img jarallax" style="background-image: url('../WebsitePanelLayout/img/bg-img/7.jpg');"></div>
+        <!-- Service Content -->
+        <div class="services-content section-padding-100-50 px-5">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Section Heading -->
+                        <div class="section-heading">
+                            <p>What we do</p>
+                            <h2><span>Various Farming</span> Is Mainstay For Us</h2>
+
+                            <img src="../WebsitePanelLayout/img/core-img/decor.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mb-50">
+                        <p style="text-align: justify;">Agriculture is the mainstay of economy because of its high share in employment and livelihood creation. It's also an important source of raw material and demand for many industrial products .</p>
+                    </div>
+                    <!-- Single Service Area -->
+                    <div class="col-12 col-lg-6">
+                        <div class="single-service-area mb-50 wow fadeInUp" data-wow-delay="100ms">
+                            <!-- Service Title -->
+                            <div class="service-title mb-3 d-flex align-items-center">
+                                <img src="../WebsitePanelLayout/img/core-img/s1.png" alt="">
+                                <h5>Agro Farming </h5>
+                            </div>
+                            <p style="text-align: justify;">Agro Farming is advance form of traditional agriculture basically it is a skill of cultivating plants and live stock.. </p>
+                        </div>
+                    </div>
+                    <!-- Single Service Area -->
+                    <div class="col-12 col-lg-6">
+                        <div class="single-service-area mb-50 wow fadeInUp" data-wow-delay="300ms">
+                            <!-- Service Title -->
+                            <div class="service-title mb-3 d-flex align-items-center">
+                                <img src="../WebsitePanelLayout/img/core-../WebsitePanelLayout/img/s2.png" alt="">
+                                <h5>Fish Farming </h5>
+                            </div>
+                            <p style="text-align: justify;">India holds the second position in the world for fresh water fish farmed production. There is immense scope and opportunities for the sector to grow. </p>
+                        </div>
+                    </div>
+                    <!-- Single Service Area -->
+                    <div class="col-12 col-lg-6">
+                        <div class="single-service-area mb-50 wow fadeInUp" data-wow-delay="500ms">
+                            <!-- Service Title -->
+                            <div class="service-title mb-3 d-flex align-items-center">
+                                <img src="../WebsitePanelLayout/img/core-img/s3.png" alt="">
+                                <h5>Organic Veg Farm</h5>
+                            </div>
+                            <p style="text-align: justify;">Vegetable farming in india is a profitable business. Vegetable farming is growing of all vegetables for human consumption. </p>
+                        </div>
+                    </div>
+                    <!-- Single Service Area -->
+                    <div class="col-12 col-lg-6">
+                        <div class="single-service-area mb-50 wow fadeInUp" data-wow-delay="700ms">
+                            <!-- Service Title -->
+                            <div class="service-title mb-3 d-flex align-items-center">
+                                <img src="../WebsitePanelLayout/img/core-img/s4.png" alt="">
+                                <h5>Papaya Farming </h5>
+                            </div>
+                            <p style="text-align: justify;">The papaya is highly productive crop and one of the mostly used fruit..it contains plenty of health ingredients. It's most growing vegetable. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Services Area End ##### -->
+    <!-- ##### Our Products Area Start ##### -->
+    <section class="our-products-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Section Heading -->
+                    <div class="section-heading text-center">
+                        <p>Our Projects</p>
+                        <h2><span>Our </span> Projects</h2>
+                        <img src="../WebsitePanelLayout/img/core-img/decor2.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Single Product Area -->
+                <div class="col-12 col-sm-12 col-lg-4">
+                    <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="100ms">
+                        <!-- Product Thumbnail -->
+                        <div class="product-thumbnail">
+                            <img src="../WebsitePanelLayout/img/pro-plots.jpg" alt="">
+                            <!-- Product Tags -->
+                            <!--  <span class="product-tags">Hot</span> -->
+
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-desc text-center pt-4">
+                            <a href="#" class="product-title">Plots</a>
+                            <!--   <h6 class="price">$17.99</h6> -->
+                        </div>
+                        <div class="gotoshop-btn text-center">
+                            <a href="pro-plot-details.html" class="btn famie-btn mt-4">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product Area -->
+                <div class="col-12 col-sm-12 col-lg-4">
+                    <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="300ms">
+                        <!-- Product Thumbnail -->
+                        <div class="product-thumbnail">
+                            <img src="../WebsitePanelLayout/img/pro-villas.jpg" alt="">
+                            <!-- Product Meta Data -->
+
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-desc text-center pt-4">
+                            <a href="#" class="product-title">Villas</a>
+                            <!--  <h6 class="price">$9.99</h6> -->
+                        </div>
+                        <div class="gotoshop-btn text-center mt-4">
+                            <a href="pro-villas-details.html" class="btn famie-btn">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product Area -->
+                <div class="col-12 col-sm-12 col-lg-4">
+                    <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="500ms">
+                        <!-- Product Thumbnail -->
+                        <div class="product-thumbnail">
+                            <img src="../WebsitePanelLayout/img/pro-agrofarm.jpg" alt="">
+                            <!-- Product Meta Data -->
+
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-desc text-center pt-4">
+                            <a href="#" class="product-title">Farm House</a>
+                            <!--  <h6 class="price">$59.99</h6> -->
+                        </div>
+                        <div class="gotoshop-btn text-center mt-4">
+                            <a href="pro-farms-details.html" class="btn famie-btn">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product Area -->
+            </div>
+
+        </div>
+    </section>
+    <!-- ##### Our Products Area End ##### -->
+    <!-- ##### Newsletter Area Start ##### -->
+    <section class="newsletter-area section-padding-100 bg-img bg-overlay jarallax" style="background-image: url('../WebsitePanelLayout/img/bg-img/8.jpg');">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10">
+                    <div class="newsletter-content">
+                        <!-- Section Heading -->
+                        <div class="section-heading white text-center">
+                            <p>What we do</p>
+                            <h2><span>Our Produce</span> Is Mainstay For Us</h2>
+                            <img src="../WebsitePanelLayout/img/core-img/decor2.png" alt="">
+                        </div>
+                        <h5 class="text-white mb-50 text-center">The Discovery of agriculture was the first big step towards a civilized life..</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- Newsletter Form -->
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-6">
+                    <form action="#" method="post">
+                        <input type="text" class="form-control" placeholder="Enter your email">
+                        <button type="submit" class="btn famie-btn">Subscribe</button>
+                    </form>
+
+                </div>
+            </div>
+    </section>
+    <!-- ##### Newsletter Area End ##### -->
+    <!-- ##### Farming Practice Area Start ##### -->
+    <section class="farming-practice-area section-padding-100-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Section Heading -->
+                    <div class="section-heading text-center">
+                        <p>Make the green world</p>
+                        <h2><span>Farming Practices</span> To Preserve Land & Water</h2>
+                        <img src="../WebsitePanelLayout/img/core-img/decor2.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Single Farming Practice Area -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="400ms">
+                        <!-- Thumbnail -->
+                        <div class="farming-practice-thumbnail">
+                            <a href="pro-farms-details.html"><img src="../WebsitePanelLayout/img/pro-1.jpg" alt=""></a>
+                        </div>
+                        <!-- Content -->
+                        <div class="farming-practice-content text-center">
+                            <!-- Icon -->
+                            <div class="farming-icon">
+                                <img src="../WebsitePanelLayout/img/core-img/cereal.png" alt="">
+                            </div>
+                            <span>Farming practice for</span>
+                            <h4>Agro Farming</h4>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Farming Practice Area -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="500ms">
+                        <!-- Thumbnail -->
+                        <div class="farming-practice-thumbnail">
+                            <a href="pro-farms-details.html"><img src="../WebsitePanelLayout/img/pro-2.jpg" alt=""></a>
+                        </div>
+                        <!-- Content -->
+                        <div class="farming-practice-content text-center">
+                            <!-- Icon -->
+                            <div class="farming-icon">
+                                <img src="../WebsitePanelLayout/img/core-img/sprout.png" alt="">
+                            </div>
+                            <span>Farming practice for</span>
+                            <h4>Fish Farming</h4>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Farming Practice Area -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="600ms">
+                        <!-- Thumbnail -->
+                        <div class="farming-practice-thumbnail">
+                            <a href="pro-farms-details.html"><img src="../WebsitePanelLayout/img/pro-3.jpg" alt=""></a>
+                        </div>
+                        <!-- Content -->
+                        <div class="farming-practice-content text-center">
+                            <!-- Icon -->
+                            <div class="farming-icon">
+                                <img src="../WebsitePanelLayout/img/core-img/vegetable.png" alt="">
+                            </div>
+                            <span>Farming practice for</span>
+                            <h4>Papaya Farming</h4>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Farming Practice Area -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="600ms">
+                        <!-- Thumbnail -->
+                        <div class="farming-practice-thumbnail">
+                            <a href="pro-farms-details.html"><img src="../WebsitePanelLayout/img/pro-4.jpg" alt=""></a>
+                        </div>
+                        <!-- Content -->
+                        <div class="farming-practice-content text-center">
+                            <!-- Icon -->
+                            <div class="farming-icon">
+                                <img src="../WebsitePanelLayout/img/core-img/vegetable.png" alt="">
+                            </div>
+                            <span>Farming practice for</span>
+                            <h4>Organic Veg Farm</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Farming Practice Area End ##### -->
+    <!-- ##### Testimonial Area Start ##### -->
+    <section class="testimonial-area bg-img section-padding-100 jarallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2><span>Walkthrough</span></h2>
+                    </div>
+                    <!-- Testimonial Slides -->
+                    <div class="testimonial-slides owl-carousel">
+                        <iframe width="100%" height="500" src="https://www.youtube.com/embed/dE6_genU-vw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- ##### Testimonial Area End ##### -->
+    <!-- ##### Contact Area Start ##### -->
+    <section class="contact-area section-padding-100-0">
+        <div class="container">
+            <div class="row justify-content-between">
+                <!-- Contact Content -->
+                <div class="col-12 col-lg-5">
+                    <div class="contact-content mb-100">
+                        <!-- Section Heading -->
+                        <div class="section-heading">
+                            <p>Contact now</p>
+                            <h2><span>Get In Touch</span> With Us</h2>
+                            <img src="../WebsitePanelLayout/img/core-img/decor.png" alt="">
+                        </div>
+                        <!-- Contact Form Area -->
+                        <div class="contact-form-area">
+                            <form action="http://moonliteagro.com/index.html" method="post">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="name" placeholder="Your Name">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="email" class="form-control" name="email" placeholder="Your Email">
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" name="subject" placeholder="Your Subject">
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="message" class="form-control" cols="30" rows="10" placeholder="Your Message"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn famie-btn">Send Message</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact Maps -->
+                <div class="col-lg-6">
+                    <div class="contact-maps mb-100">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7118.368246334715!2d81.00113702672515!3d26.865890653446474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be2bedbe0741b%3A0x6f91b0e3f372c4ed!2sVibhuti%20Khand%2C%20Gomti%20Nagar%2C%20Lucknow%2C%20Uttar%20Pradesh%20226010!5e0!3m2!1sen!2sin!4v1582354575771!5m2!1sen!2sin" allowfullscreen=""></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Contact Area End ##### -->
+    <!-- ##### Footer Area Start ##### -->
+    <!-- ##### Footer Area End ##### -->
+    <!-- ##### All Javascript Files ##### -->
+    <!-- jquery 2.2.4  -->
+    <script src="../WebsitePanelLayout/js/jquery.min.js"></script>
+    <!-- Popper js -->
+    <script>
+        $(document).ready(function () {
+            $("#myModal").modal('show');
+        });
+    </script>
+    <div id="myModal" class="modal fade" style="z-index: 99999999;" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="top:100px">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="newyear">
+                                <img style="width:100%" src="../WebsitePanelLayout/img/popup.jpeg" class="img-responsive" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+
+      var id = '#dialog';
+
+      //Get the screen height and width
+      var maskHeight = $(document).height();
+      var maskWidth = $(window).width();
+
+      //Set heigth and width to mask to fill up the whole screen
+      $('#mask').css({'width':maskWidth,'height':maskHeight});
+
+      //transition effect
+      $('#mask').fadeIn(500);
+      $('#mask').fadeTo("slow",0.9);
+
+      //Get the window height and width
+      var winH = $(window).height();
+      var winW = $(window).width();
+
+      //Set the popup window to center
+      $(id).css('top',  winH/2-$(id).height()/2);
+      $(id).css('left', winW/2-$(id).width()/2);
+
+      //transition effect
+      $(id).fadeIn(2000);
+
+      //if close button is clicked
+      $('.window .close').click(function (e) {
+        //Cancel the link behavior
+        e.preventDefault();
+
+        $('#mask').hide();
+        $('.window').hide();
+      });
+
+      //if mask is clicked
+      $('#mask').click(function () {
+        $(this).hide();
+        $('.window').hide();
+      });
+
+    });
+    </script>
+    <script src="../WebsitePanelLayout/js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="../WebsitePanelLayout/js/bootstrap.min.js"></script>
+    <!-- Owl Carousel js -->
+    <script src="../WebsitePanelLayout/js/owl.carousel.min.js"></script>
+    <!-- Classynav -->
+    <script src="../WebsitePanelLayout/js/classynav.js"></script>
+    <!-- Wow js -->
+    <script src="../WebsitePanelLayout/js/wow.min.js"></script>
+    <!-- Sticky js -->
+    <script src="../WebsitePanelLayout/js/jquery.sticky.js"></script>
+    <!-- Magnific Popup js -->
+    <script src="../WebsitePanelLayout/js/jquery.magnific-popup.min.js"></script>
+    <!-- Scrollup js -->
+    <script src="../WebsitePanelLayout/js/jquery.scrollup.min.js"></script>
+    <!-- Jarallax js -->
+    <script src="../WebsitePanelLayout/js/jarallax.min.js"></script>
+    <!-- Jarallax Video js -->
+    <script src="../WebsitePanelLayout/js/jarallax-video.min.js"></script>
+    <!-- Active js -->
+    <script src="../WebsitePanelLayout/js/active.js"></script>
+</body>
+</html>
+
+

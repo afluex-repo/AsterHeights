@@ -1,0 +1,93 @@
+﻿@model AsterHeight.Models.Home
+@{
+    Layout = null;
+}
+<link href="../../AssociatePanelcss/assets/css/style-darkblue-dark.css" rel="stylesheet">
+
+<link href="../../WebsiteCss/css/bootstrap.css" rel="stylesheet">
+<link href="../../WebsiteCss/css/style.css" rel="stylesheet">
+<link href="../../WebsiteCss/css/responsive.css" rel="stylesheet">
+<!--Color Switcher Mockup-->
+<link href="../../WebsiteCss/css/color-switcher-design.css" rel="stylesheet">
+<!--Color Themes-->
+<link id="theme-color-file" href="../../WebsiteCss/css/color-themes/default-theme.css" rel="stylesheet">
+
+<link rel="shortcut icon" href="~/AssociateCSS/assets/img/favicon.png" type="image/x-icon">
+<link rel='shortcut icon' type='image/x-icon' href="~/AssociateCSS/assets/img/favicon.png" />
+<!-- Responsive -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+<body class="login-section">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <div class="dashboard1" style="padding-top:14px;">
+                        <img src="../../AssociatePanelcss/assets/img/aster-log.png" class="img-fluid" alt="logo1" />
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <div class="dashboard2">
+                        @*<img src="../../AssociatePanelcss/assets/img/blossom.png" class="img-fluid" alt="logo2" />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="column col-lg-12 col-md-12 col-sm-12">
+                    <h2 class="text-center">Login</h2>
+                    <!-- Login Form -->
+                    <div class="login-form">
+                        <!--Login Form-->
+                        <p style="color:red"> @TempData["Login"] </p>
+                        @using (Html.BeginForm("LoginAction", "Home", FormMethod.Post, new { @id = "signupForm" }))
+                        {
+                            <div class="form-group">
+                                <label>Login Id </label>
+                                @Html.TextBoxFor(m => m.LoginId, new { @Placeholder = "Login Id", @required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @Placeholder = "Password", @required = "required" })
+
+                            </div>
+                            <div class="clearfix">
+
+                                <div class="pull-left">
+                                    <div class="form-group no-margin" style="padding-top:13px;">
+                                        <a style="color: #413b34;font-size: 16px;font-weight: 500;" href="~/Home/ForgetPassword">Forgot Password</a>
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <div class="form-group no-margin">
+                                        <a class="theme-btn btn-style-one" href="#">Back To Home</a>
+                                        <input type="submit" id="Login" class="theme-btn btn-style-one signdown" name="Login" value="Sign In">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                    <!--End Login Form -->
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script src="../../WebsiteCss/js/jquery.js"></script>
+<script src="../../WebsiteCss/js/popper.min.js"></script>
+<script src="../../WebsiteCss/js/bootstrap.min.js"></script>
+<script src="../../WebsiteCss/js/jquery.fancybox.js"></script>
+<script src="../../WebsiteCss/js/owl.js"></script>
+<script src="../../WebsiteCss/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="../../WebsiteCss/js/wow.js"></script>
+<script src="../../WebsiteCss/js/appear.js"></script>
+<script src="../../WebsiteCss/js/mixitup.js"></script>
+<script src="../../WebsiteCss/js/script.js"></script>
+<!-- Color Setting -->
+<script src="../../WebsiteCss/js/color-settings.js"></script>
+<!--Clients Section-->

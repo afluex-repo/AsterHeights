@@ -1,0 +1,372 @@
+﻿@model AsterHeight.Models.Reports
+
+@{
+    ViewBag.Title = "SalaryDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("SalaryDetails", "AdminReports", FormMethod.Post, new { @id = "form1" }))
+{
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Salary</li>
+            <li class="breadcrumb-item">Pay Salary</li>
+        </ul>
+    </section>
+
+
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Pay Salary</h4>
+
+                    <p style="color: red">
+                        @TempData["Payment"]
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                Plot Number <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @Placeholder = "Login Id"})
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <br />
+                                <input type="button" name="SearchSallary" value="Search" id="btnSearchSalary" class="btn btn-success"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- HTML5 Export Buttons table start -->
+                            <div class="card-block" style="margin-left:5px;margin-right:5px">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover" data-page-length='50' id="tableExport" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>S No.</th>
+                                                <th>Inst No</th>
+                                                <th>Login Id</th>
+                                                <th>Inst Amount</th>
+                                                <th>Inst Date</th>
+                                                <th>Pay</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                if (Model.lstassociate != null)
+                                                {
+                                                    int i = 1;
+                                                    foreach (var Item in Model.lstassociate)
+                                                    {
+                                                        <tr class="text-left">
+                                                            <td>@i</td>
+                                                            <td>@Item.InstallmentNo</td>
+                                                            <td>@Item.LoginId</td>
+                                                            <td>@Item.InstAmt</td>
+                                                            <td>@Item.InstallmentDate</td>
+                                                            <td>
+                                                                @if (Item.Status == "Unpaid")
+                                                                {
+                                                                    <a class="btn btn-info btn-sm" href="/AdminReports/Pay?SallaryDetailsId=@Item.PK_SallaryDetailsId">Pay</a>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                        i++;
+                                                    }
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+
+
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+   
+    function isNumberOrDecimal(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function onlyAlphabets(e, t) {
+        try {
+            if (window.event) {
+                var charCode = window.event.keyCode;
+            }
+            else if (e) {
+                var charCode = e.which;
+            }
+            else { return true; }
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+                return true;
+            else
+                return false;
+        }
+        catch (err) {
+            alert(err.Description);
+        }
+    }
+
+ 
+  
+    
+    function CheckPayMode() {
+        debugger
+        if ($('#PaymentMode').val() == '2') {
+            $('#txnNo').html('Cheque No.');
+            $('#txndt').html('Cheque Date');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $('#divtransationdate').show();
+            $("#divbankbranch").show();
+            $("#spntrannumber").show();
+            $("#spntradate").show();
+            $("#spnbankname").show();
+            $("#spnbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").show();
+            $("#divutramount").show();
+            $("#TransactionNumber").attr("placeholder", "Cheque No.");
+            $("#TransactionDate").attr("placeholder", "Cheque Date");
+        }
+        else if ($('#PaymentMode').val() == '3') {
+            $('#txndt').html('NEFT Date');
+            $('#txnNo').text('NEFT No.');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbankbranch").show();
+            $('#divtransationdate').show();
+            $("#spntrannumber").hide();
+            $("#spntradate").hide();
+            $("#spnbankname").hide();
+            $("#spnbankbranch").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").show();
+            $("#divutramount").show();
+            $("#TransactionNumber").attr("placeholder", "NEFT No.");
+            $("#TransactionDate").attr("placeholder", "NEFT Date");
+        }
+        else if ($('#PaymentMode').val() == '4') {
+            $('#txndt').html('DD Date');
+            $('#txnNo').text('DD No.');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#spntrannumber").show();
+            $("#spntradate").show();
+            $('#divtransationdate').show();
+            $("#spnbankname").show();
+            $("#spnbankbranch").show();
+            $("#divbankname").show();
+            $("#divbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNumber").attr("placeholder", "DD No.");
+            $("#TransactionDate").attr("placeholder", "DD Date");
+        }
+        else if ($('#PaymentMode').val() == '5') {
+            $('#txndt').html('RTGS Date');
+            $('#txnNo').text('RTGS No.');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbankbranch").show();
+            $("#spntrannumber").hide();
+            $("#spntradate").hide();
+            $('#divtransationdate').show();
+            $("#spnbankname").hide();
+            $("#spnbankbranch").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").show();
+            $("#divutramount").show();
+            $("#TransactionNumber").attr("placeholder", "RTGS No.");
+            $("#TransactionDate").attr("placeholder", "RTGS Date");
+        }
+        else if ($('#PaymentMode').val() == '6') {
+            $('#txndt').html('IMPS Date');
+            $('#txnNo').text('IMPS No.');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#spntrannumber").hide();
+            $("#spntradate").hide();
+            $("#spnbankname").hide();
+            $("#spnbankbranch").hide();
+            $('#divtransationdate').show();
+            $("#divbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").show();
+            $("#divutramount").show();
+            $("#TransactionNumber").attr("placeholder", "IMPS No.");
+            $("#TransactionDate").attr("placeholder", "IMPS Date");
+        }
+        else if ($('#PaymentMode').val() == '7') {
+            $('#txnNo').text('Mobile No./UPI ID');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#spntrannumber").show();
+            $("#divbankbranch").hide();
+            $('#divtransationdate').hide();
+            //$("#divPaymentMode").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNumber").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == '8') {
+
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#spntrannumber").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $('#divtransationdate').hide();
+            //$("#divPaymentMode").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNumber").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == '9') {
+
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#spntrannumber").show();
+            $("#divbankbranch").hide();
+            //$("#divPaymentMode").hide();
+            $('#divtransationdate').hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNumber").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == '10') {
+            $("#spntrannumber").show();
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            //$("#divPaymentMode").hide();
+            $("#divAssociateId").hide();
+            $('#divtransationdate').hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNumber").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == '11') {
+
+            $('#txndt').html('Transaction Date');
+            $('#txnNo').text('Reciept No.');
+            $("#spntrannumber").show();
+            $("#spntradate").show();
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $('#divtransationdate').show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNumber").attr("placeholder", "Reciept No.");
+            $("#TransactionDate").attr("placeholder", "Transaction Date");
+        }
+        else if ($('#PaymentMode').val() == "13") {
+            $('#txnAssociateId').html('Associate Id');
+            $('#txnAssociateName').text('Associate Name');
+            $("#divPaymentDate").hide();
+            $("#divPaymentMode").show();
+            $("#divtransactiono").hide();
+            $("#divbankname").hide();
+            $("#divbookingno").hide();
+            $('#divtransationdate').hide();
+            $("#divbankbranch").hide();
+            $("#divAssociateId").show();
+            $("#divAssociateName").show();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#AssociateLoginID").attr("placeholder", "Associate Id");
+            $("#AssociateName").attr("placeholder", "AssociateName");
+        }
+        else {
+            $("#divPaymentMode").hide();
+            $("#divtransactiono").hide();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+        }
+
+    }
+</script>
+
+
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>
+
+
+<script>
+    $('#TransactionDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+        minDate: new Date(new Date().setMonth(new Date().getMonth() - 2))
+    });
+    $("#PaymentDate").datepicker({
+        dateFormat: 'dd/mm/yy',
+        maxDate: 0,
+        changeYear: true,
+        changeMonth: true
+    });
+</script>

@@ -1,0 +1,207 @@
+﻿@model AsterHeight.Models.Reports
+
+@{
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Tax Invoice</title>
+    <style>
+        table {
+            font-size: 12px;
+            font-family: Calibri;
+        }
+
+            table td {
+                padding: 3px 5px;
+            }
+
+
+        .dark-border td {
+            font-size: 14px;
+        }
+
+        .light-border td {
+            border-bottom: 1px solid #000;
+            font-size: 14px;
+            border-right: 1px solid #000;
+        }
+
+            .light-border td:last-child {
+                border-right: none;
+            }
+
+        .blossom_logo {
+            position: relative;
+            left: 10px;
+            display: inline-block;
+        }
+
+        .logo_content {
+            display: inline-block;
+        }
+
+        .logo_content {
+            display: inline-block;
+            text-align: center;
+            right: 20px;
+            padding: 0px 170px;
+        }
+
+        @@media print {
+            .logo_content {
+                display: inline-block;
+                text-align: center;
+                right: 20px;
+                padding-right: 40px;
+                margin-top: -100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form action="https://www.graycinherbal.com/PrintPurchaseTaxInnvoice/PrintSaleTaxInnvoice" id="form1" method="post">
+        <table border="1" style="width:100%">
+            <tr>
+                <td colspan="11">
+                    <div class="blossom_logo">
+                        <img src="~/Web/assets/images/logo_ori.png" height="93" width="148" />
+                    </div>
+                    <div class="logo_content">
+                        <h1>@ViewBag.CompanyName</h1>
+                        <h3>@ViewBag.CompanyAddress</h3>
+                        <h3>Phone : @ViewBag.ContactNo | GSTIN No : </h3>
+                    </div>
+                </td>
+                <td colspan="3" style="text-align:center; padding-right:20px">
+                    <img src="~/Web/assets/images/AsterHeightgroup_logo.png" height="93" width="148" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="14" style="text-align:center">
+                    <h3>TAX INVOICE</h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    To,<br />
+                    @ViewBag.Name (@ViewBag.Loginid)<br />
+                    @ViewBag.AssociateAddress
+                    @ViewBag.Mobile
+                </td>
+                <td colspan="10">
+                    Invoice No : @ViewBag.OrderNo<br />
+                    Invoice Date : @DateTime.Now.ToString("dd/MM/yyyy")
+                </td>
+            </tr>
+            <tr>
+                <td style="width:90px">SNo</td>
+                <td colspan="9">Description</td>
+                @*<td colspan="4">HSN Code</td>*@
+                @*<td colspan="2">Batch No</td>*@
+                <td colspan="2">SGST</td>
+                <td colspan="1">CGST</td>
+                <td colspan="2">IGST</td>
+            </tr>
+            @if (Model != null)
+            {
+                if (Model.lsttopupreport != null)
+                {
+                    int i = 1;
+                    foreach (var Item in Model.lsttopupreport)
+                    {
+                        <tr>
+                            <td style="width:90px">
+                                @i
+                            </td>
+                            <td colspan="9">Holiday Voucher</td>
+                            @*<td colspan="4">@Item.HSNCode</td>*@
+
+                            <td colspan="2">@Item.SGST</td>
+                            <td colspan="1">@Item.CGST</td>
+                            <td colspan="2">@Item.IGST</td>
+                            @*<td colspan="2">@Item.Quantity</td>*@
+                        </tr>
+                        i++;
+                    }
+                }
+            }
+            <tr>
+                <td colspan="9"></td>
+                <td colspan="3">Total</td>
+                <td colspan="2">@ViewBag.TotalFinalAmount</td>
+            </tr>
+            <tr>
+                <td rowspan="5" colspan="5">
+                    Tax Summary<br />
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">Total Sale Value before Tax</td>
+                <td colspan="2">@ViewBag.ValueBeforeTax</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">Added Tax</td>
+                <td colspan="2">@ViewBag.TaxAdded</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">Total Value after Tax</td>
+                <td colspan="2">@ViewBag.TotalFinalAmount</td>
+            </tr>
+            @*<tr>
+                    <td colspan="4"></td>
+                    <td colspan="3">Total Value before Round Off</td>
+                    <td colspan="2">4324.00</td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td colspan="3">Round Off</td>
+                    <td colspan="2">0.00</td>
+                </tr>*@
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">
+                    Grand Total :
+                </td>
+                <td colspan="2">
+                    @ViewBag.TotalFinalAmount
+                </td>
+            </tr>
+            <tr>
+                <td colspan="14" style="text-align:right">
+                    Total Value (in Words) : @ViewBag.TotalFinalAmountWords
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    Terms & Conditions :
+                    <ul>
+                        <li>All disputes will be subject to Lucknow jurisdiction</li>
+                        <li>Listed above have been received in order and in saleable condition.</li>
+                    </ul>
+                </td>
+                <td colspan="5">
+                    <b>AsterHeight Group</b>
+                    <br />
+                    Authorised Signatory
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>
+
+

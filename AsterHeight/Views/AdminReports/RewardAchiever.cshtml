@@ -1,0 +1,207 @@
+﻿@model AsterHeight.Models.Reports
+
+@{
+    ViewBag.Title = "RewardAchiever";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../files/assets/images/login-gif-11.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>
+<div class="loader" id="divload"></div>
+@using (Html.BeginForm("RewardAchiever", "AdminReports", FormMethod.Post, new { @id = "form1" }))
+{
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                Reports
+            </li>
+            <li class="breadcrumb-item">Reward Achiever</li>
+        </ul>
+    </section>
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Reward Achiever</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Login Id
+                            @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @placeholder = "Login Id" })
+                        </div>
+                        <div class="col-md-3">
+                            Reward
+                            @Html.DropDownListFor(m => m.RewardID, new SelectList(ViewBag.ddlReward, "Value", "Text"), new { @class = "form-control" })
+                        </div>
+
+                        <div class="col-md-3">
+                            <br />
+                            <input type="submit" class="btn btn-info" value="Get Details" name="Search" onclick="return Validate();" />
+                        </div>
+
+                    </div>
+
+                    <br />
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>LoginId</th>
+                                <th>Name</th>
+                                <th>Reward</th>
+                                <th>Status</th>
+                                <th>TransactionNo</th>
+                                <th>TransactionDate</th>
+                                <th>Paid Date</th>
+                                @*<th>Action</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.lstassociate != null)
+                                {
+                                    int i = 1;
+                                    foreach (var Item in Model.lstassociate)
+                                    {
+                                        <tr class="text-left">
+                                            <td>@i</td>
+                                            <td>@Item.LoginId</td>
+                                            <td>@Item.Name</td>
+                                            <td>@Item.RewardName</td>
+                                            <td>@Item.Status</td>
+                                            <td>
+                                                <input type="text" id="txtTxnNo @i" name="txtTxnNo @i" onchange="getdata(this)" />
+                                            </td>
+                                            <td>
+                                                <input type="date" id="txtTxnDate @i" name="txtTxnDate @i" onchange="getdata2(this)" />
+                                            </td>
+                                            <td>
+                                                <input type="date" id="txtPaidDate @i" name="txtPaidDate @i" onchange="getdata3(this)" />
+                                            </td>
+                                            @*<td>
+                                                <a href="#" class="btn btn-success btn-sm" onclick="Approve('@i','@Item.PK_RewardItemId');">Pay</a>
+
+                                            </td>*@
+                                        </tr>
+                                        i++;
+                                    }
+
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+
+                    <input type="hidden" id="txtno" />
+                    <input type="hidden" id="txtDt" />
+                    <input type="hidden" id="txtPdDt" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+
+    function getdata(no) {
+        $('#txtno').val(no.value);
+    }
+    function getdata2(date) {
+        $('#txtDt').val(date.value);
+    }
+    function getdata3(pddate) {
+        $('#txtPdDt').val(pddate.value);
+    }
+
+    function Approve(id, userid) {
+        debugger
+        var r = confirm('Are you sure you want to pay this  ?');
+        if (r == true) {
+
+            var Description = $('#txtno').val();
+            var Date = $('#txtDt').val();
+            var PaidDate = $('#txtPdDt').val();
+            $.ajax({
+                url: "/AdminReports/ApprovePayment",
+                Type: "Get",
+                DataType: "JSON",
+                data: { PK_RewardItemId: userid, Description: $('#txtno').val(), ApprovedDate: $('#txtDt').val(), PaidDate: $('#txtPdDt').val() },
+                success: function (data) {
+
+                    alert(" Approved successfully");
+                    window.location.href = '@Url.Action("RewardAchiever", "AdminReports")';
+
+
+                }
+
+            });
+        }
+    }
+
+
+
+    function Validate() {
+
+        $(".errortext").removeClass("errortext");
+
+        if ($("#IsDownline").prop("checked") == true) {
+            if ($('#LoginId').val() == '') {
+                $("#LoginId").addClass('errortext');
+                $('#LoginId').focus();
+                return false;
+            }
+        }
+        else {
+            return true;
+        }
+    }
+
+
+    $('#ClosingDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    function isNumberOrDecimal(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+</script>
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>

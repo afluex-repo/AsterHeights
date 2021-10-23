@@ -1,0 +1,164 @@
+﻿@model AsterHeight.Models.Reports
+
+@{
+    ViewBag.Title = "AllReturnBenefitList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../files/assets/images/login-gif-11.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>
+<div class="loader" id="divload"></div>
+@using (Html.BeginForm("AllReturnBenefitList", "AdminReports", FormMethod.Post, new { @id = "form1" }))
+{
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Rental Benefit
+</li>
+            <li class="breadcrumb-item">All Return Benefit List</li>
+        </ul>
+    </section>
+
+
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>All Return Benefit List</h4>
+
+
+                </div>
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Login ID
+                                @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @Placeholder = "Search by Login ID" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                From Date
+                                @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @Placeholder = "From Date", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                To Date
+                                @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @Placeholder = "To Date", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                Status
+                                @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.ddlStatus, "Value", "Text"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m3 s12">
+                            <div class="form-group">
+                                <br />
+                                <input class="btn btn-success pull-left" type="submit" value="Search" id="btnSearch" name="Search" />
+                                <input type="submit" style="margin-left:20px;" class="btn btn-success" value="Export To Excel" name="Export" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="dt-responsive table-responsive">
+                        <table class="table table-striped table-hover" data-page-length='50' id="tableExport" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th hidden>PK_BookingID</th>
+                                    <th>S No.</th>
+                                    <th>Login Id</th>
+                                    <th>Name</th>
+                                    <th>Assocaite Details</th>
+                                    <th>Plot Number</th>
+                                    <th>Due Date</th>
+                                    <th>Inst Amt</th>
+                                    <th>Beneficary Name</th>
+                                    <th>Account Number</th>
+                                    <th>IFSCCode</th>
+                                    <th>Bank Name</th>
+                                    <th>Bank Branch</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    if (Model.lstPlot != null)
+                                    {
+                                        int i = 1;
+                                        foreach (var Item in Model.lstPlot)
+                                        {
+                                            <tr class="text-left">
+                                                <td hidden></td>
+                                                <td>@i</td>
+                                                <td>@Item.LoginId</td>
+                                                <td>@Item.Name</td>
+                                                <td>@Item.AssociateLoginID (@Item.AssociateName)</td>
+                                                <td>@Item.PlotNumber</td>
+                                                <td>@Item.DueDate</td>
+                                                <td>@Item.InstallmentAmount</td>
+                                                <td>@Item.Name</td>
+                                                <td>@Item.MemberAccNo</td>
+                                                <td>@Item.IFSCCode</td>
+                                                <td>@Item.BankName</td>
+                                                <td>@Item.BankBranch</td>
+                                                <td>@Item.Status</td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                }
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+`
+
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+       
+    });
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true
+    });
+</script>
+

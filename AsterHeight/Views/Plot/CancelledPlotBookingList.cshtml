@@ -1,0 +1,126 @@
+﻿@model AsterHeight.Models.Plot
+
+@{
+    ViewBag.Title = "CancelledPlotBookingList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("CancelledPlotBookingList", "Plot", FormMethod.Post, new { @id = "form1" }))
+{
+
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item">Cancelled Booking List</li>
+        </ul>
+    </section>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Cancelled Booking List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="input-field col m3 s12">
+                                <div class="form-group">
+                                    Customer ID
+                                    @Html.TextBoxFor(m => m.CustomerID, new { @class = "form-control", @Placeholder = "Search by Customer ID" })
+                                </div>
+                            </div>
+
+                            <div class="input-field col m3 s12">
+                                <div class="form-group">
+                                    Associate ID
+                                    @Html.TextBoxFor(m => m.AssociateID, new { @class = "form-control", @Placeholder = "Search by Associate ID" })
+                                </div>
+                            </div>
+                            <div class="input-field col m3 s12">
+                                <div class="form-group">
+                                    Booking Number
+                                    @Html.TextBoxFor(m => m.BookingNumber, new { @class = "form-control", @Placeholder = "Search by BookingNumber  " })
+                                </div>
+                            </div>
+                            <div class="input-field col m3 s12">
+                                <div class="form-group">
+                                    <br />
+                                    <input class="btn btn-success" type="submit" value="Search" id="btnSearch" name="SearchCancelled" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-md" data-page-length='50' id="tableExport" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th hidden>PK_BookingId</th>
+                                        <th>S No.</th>
+                                        <th>Branch</th>
+                                        <th>Customer Name</th>
+                                        <th>Associate Name</th>
+                                        <th>Plot No.</th>
+                                        <th>Booking Number</th>
+                                        <th>Booking Date</th>
+                                        <th>Booking Amount</th>
+                                        <th>Payment Plan</th>
+                                        <th>Remark</th>
+                                        <th>Cancel Date</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                {
+                    if (Model.lstPlot != null)
+                    {
+                        int i = 1;
+                        foreach (var Item in Model.lstPlot)
+                        {
+                                                <tr class="text-left">
+                                                    <td hidden>@Item.PK_BookingId</td>
+                                                    <td>@i</td>
+                                                    <td>@Item.BranchID</td>
+                                                    <td>@Item.CustomerName</td>
+                                                    <td>@Item.AssociateName</td>
+                                                    <td>@Item.PlotNumber</td>
+                                                    <td>@Item.BookingNumber</td>
+                                                    <td>@Item.BookingDate</td>
+                                                    <td>@Item.BookingAmount</td>
+                                                    <td>@Item.PaymentPlanID</td>
+                                                    <td>@Item.CancelRemark</td>
+                                                    <td>@Item.CancelDate</td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+                    </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+}
+
+
+
+
+
+
+

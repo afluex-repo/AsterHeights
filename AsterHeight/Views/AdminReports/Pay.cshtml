@@ -1,0 +1,553 @@
+﻿@model AsterHeight.Models.Reports
+
+@{
+    ViewBag.Title = "Pay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2></h2>
+@using (Html.BeginForm("Pay", "AdminReports", FormMethod.Post, new { @id = "form1" }))
+{
+
+
+
+    <section class="section">
+        <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <i data-feather="home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item">Salary</li>
+            <li class="breadcrumb-item">Payment</li>
+        </ul>
+    </section>
+
+
+    <div class="section-body">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Payment</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                InstallmentAmount <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @Placeholder = "Login Id",@readonly=true })
+                                @Html.HiddenFor(m => m.PK_SallaryDetailsId)
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                InstallmentAmount <span style="color: red">*</span>
+                             
+                                @Html.TextBoxFor(m => m.InstallmentAmount, new { @class = "form-control", @Placeholder = "Amount", @readonly = true })
+                               
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                PaymentDate<span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.PaymentDate, new { @class = "form-control", @Placeholder = "PaymentDate", @readonly = true })
+                                
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    Payment Mode <span style="color: red">*</span>
+                                    @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlPaymentMode, "Value", "Text"), new { @class = "form-control", @onchange = "return CheckPayMode()" })
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="row" id="divPaymentMode" style="display: none">
+                        <div class="col-md-3" id="divtransactiono" style="display: none">
+                            <div class="form-group">
+                                <span id="txnNo"></span> <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.TransactionNo, new { @class = "form-control", @Placeholder = "Cheque/Transaction Number", @maxlength = "50", @onchange = "return ChangeUTR();" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="divtransationdate" style="display: none">
+                            <div class="form-group">
+                                <span id="txndt"></span><span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.TransactionDate, new { @class = "form-control", @Placeholder = "Cheque/Transaction Date", @Readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="divbankname" style="display: none">
+                            <div class="form-group">
+                                Bank Name <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @Placeholder = "Bank Name" })
+                            </div>
+                        </div>
+                        <div class="input-field col-md-3" id="divAssociateId" style="display: none">
+                            <div class="form-group">
+                                <span id="txnAssociateId"></span> <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.AssociateLoginID, new { @class = "form-control", @Placeholder = "Associate Id", @maxlength = "50", @onchange = "return getAssociateName();" })
+                                @Html.HiddenFor(m => m.AdjustmentId)
+                            </div>
+                        </div>
+                        <div class="input-field col-md-3" id="divAssociateName" style="display: none">
+                            <div class="form-group">
+                                <span id="txnAssociateName"></span> <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.SponsorName, new { @class = "form-control", @Placeholder = "Associate Name", @maxlength = "50", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="divbankbranch" style="display: none">
+                            <div class="form-group">
+                                Bank Branch <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @Placeholder = "Bank Branch" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <br />
+                            <input type="button" name="Save" value="Pay" id="Save" class="btn btn-success" onclick="return validateform();" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    $("#PaymentDate").datepicker({
+        dateFormat: 'dd/mm/yy',
+        maxDate: 0,
+        changeYear: true,
+        changeMonth: true
+    });
+    function CheckPayMode() {
+        debugger
+        if ($('#PaymentMode').val() == '2') {
+            $('#txnNo').html('Cheque No.');
+            $('#txndt').html('Cheque Date');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $('#divtransationdate').show();
+            $("#divbankbranch").show();
+            $("#spntrannumber").show();
+            $("#spntradate").show();
+            $("#spnbankname").show();
+            $("#spnbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").show();
+            $("#divutramount").show();
+            $("#TransactionNo").attr("placeholder", "Cheque No.");
+            $("#TransactionDate").attr("placeholder", "Cheque Date");
+        }
+        else if ($('#PaymentMode').val() == '3') {
+            $('#txndt').html('NEFT Date');
+            $('#txnNo').text('NEFT No.');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbankbranch").show();
+            $('#divtransationdate').show();
+            $("#spntrannumber").hide();
+            $("#spntradate").hide();
+            $("#spnbankname").hide();
+            $("#spnbankbranch").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").show();
+            $("#divutramount").show();
+            $("#TransactionNo").attr("placeholder", "NEFT No.");
+            $("#TransactionDate").attr("placeholder", "NEFT Date");
+        }
+        else if ($('#PaymentMode').val() == '4') {
+            $('#txndt').html('DD Date');
+            $('#txnNo').text('DD No.');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#spntrannumber").show();
+            $("#spntradate").show();
+            $('#divtransationdate').show();
+            $("#spnbankname").show();
+            $("#spnbankbranch").show();
+            $("#divbankname").show();
+            $("#divbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNo").attr("placeholder", "DD No.");
+            $("#TransactionDate").attr("placeholder", "DD Date");
+        }
+        else if ($('#PaymentMode').val() == '5') {
+            $('#txndt').html('RTGS Date');
+            $('#txnNo').text('RTGS No.');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#divbankbranch").show();
+            $("#spntrannumber").hide();
+            $("#spntradate").hide();
+            $('#divtransationdate').show();
+            $("#spnbankname").hide();
+            $("#spnbankbranch").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").show();
+            $("#divutramount").show();
+            $("#TransactionNo").attr("placeholder", "RTGS No.");
+            $("#TransactionDate").attr("placeholder", "RTGS Date");
+        }
+        else if ($('#PaymentMode').val() == '6') {
+            $('#txndt').html('IMPS Date');
+            $('#txnNo').text('IMPS No.');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").show();
+            $("#spntrannumber").hide();
+            $("#spntradate").hide();
+            $("#spnbankname").hide();
+            $("#spnbankbranch").hide();
+            $('#divtransationdate').show();
+            $("#divbankbranch").show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").show();
+            $("#divutramount").show();
+            $("#TransactionNo").attr("placeholder", "IMPS No.");
+            $("#TransactionDate").attr("placeholder", "IMPS Date");
+        }
+        else if ($('#PaymentMode').val() == '7') {
+            $('#txnNo').text('Mobile No./UPI ID');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#spntrannumber").show();
+            $("#divbankbranch").hide();
+            $('#divtransationdate').hide();
+            //$("#divPaymentMode").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNo").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == '8') {
+
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#spntrannumber").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $('#divtransationdate').hide();
+            //$("#divPaymentMode").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNo").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == '9') {
+
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#spntrannumber").show();
+            $("#divbankbranch").hide();
+            //$("#divPaymentMode").hide();
+            $('#divtransationdate').hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNo").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == '10') {
+            $("#spntrannumber").show();
+            $('#txnNo').text('Mobile No. / UPI ID');
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            //$("#divPaymentMode").hide();
+            $("#divAssociateId").hide();
+            $('#divtransationdate').hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNo").attr("placeholder", "Mobile No. / UPI ID");
+        }
+        else if ($('#PaymentMode').val() == '11') {
+
+            $('#txndt').html('Transaction Date');
+            $('#txnNo').text('Reciept No.');
+            $("#spntrannumber").show();
+            $("#spntradate").show();
+            $("#divPaymentMode").show();
+            $("#divtransactiono").show();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $('#divtransationdate').show();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#TransactionNo").attr("placeholder", "Reciept No.");
+            $("#TransactionDate").attr("placeholder", "Transaction Date");
+        }
+        else if ($('#PaymentMode').val() == "13") {
+            $('#txnAssociateId').html('Associate Id');
+            $('#txnAssociateName').text('Associate Name');
+            $("#divPaymentDate").hide();
+            $("#divPaymentMode").show();
+            $("#divtransactiono").hide();
+            $("#divbankname").hide();
+            $("#divbookingno").hide();
+            $('#divtransationdate').hide();
+            $("#divbankbranch").hide();
+            $("#divAssociateId").show();
+            $("#divAssociateName").show();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+            $("#AssociateLoginID").attr("placeholder", "Associate Id");
+            $("#AssociateName").attr("placeholder", "AssociateName");
+        }
+        else {
+            $("#divPaymentMode").hide();
+            $("#divtransactiono").hide();
+            $("#divbankname").hide();
+            $("#divbankbranch").hide();
+            $("#divAssociateId").hide();
+            $("#divAssociateName").hide();
+            $("#divutrname").hide();
+            $("#divutramount").hide();
+        }
+
+    }
+    function validateform() {
+        debugger
+        $(".errortext").removeClass("errortext");
+
+        if ($('#PaymentDate').val() == '') {
+            $("#PaymentDate").addClass('errortext');
+            $('#PaymentDate').focus();
+            return false;
+        }
+        if ($('#PaymentMode').val() == '0') {
+            $("#PaymentMode").addClass('errortext');
+            $('#PaymentMode').focus();
+            return false;
+        }
+       
+        if ($('#PaymentMode').val() == '0') {
+            $("#PaymentMode").addClass('errortext');
+            $('#PaymentMode').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+        if ($('#PaymentMode').val() == '2') {
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#TransactionDate').val() == '') {
+                $("#TransactionDate").addClass('errortext');
+                $('#TransactionDate').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+           
+        }
+        else if ($('#PaymentMode').val() == '3') {
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#TransactionDate').val() == '') {
+                $("#TransactionDate").addClass('errortext');
+                $('#TransactionDate').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+    
+        }
+        else if ($('#PaymentMode').val() == '4') {
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#TransactionDate').val() == '') {
+                $("#TransactionDate").addClass('errortext');
+                $('#TransactionDate').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+        }
+        else if ($('#PaymentMode').val() == '5') {
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#TransactionDate').val() == '') {
+                $("#TransactionDate").addClass('errortext');
+                $('#TransactionDate').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+          
+        }
+        else if ($('#PaymentMode').val() == '6') {
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#TransactionDate').val() == '') {
+                $("#TransactionDate").addClass('errortext');
+                $('#TransactionDate').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+          
+        }
+        else if ($('#PaymentMode').val() == '7') {
+
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+
+        }
+        else if ($('#PaymentMode').val() == '8') {
+
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+        }
+        else if ($('#PaymentMode').val() == '9') {
+
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+        }
+        else if ($('#PaymentMode').val() == '10') {
+
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+       
+        }
+        else if ($('#PaymentMode').val() == '11') {
+
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+            if ($('#TransactionDate').val() == '') {
+                $("#TransactionDate").addClass('errortext');
+                $('#TransactionDate').focus();
+                $("#divload").css({ 'display': 'none' });
+                return false;
+            }
+  
+        }
+      
+        return true;
+    }
+</script>
